@@ -1,1 +1,11 @@
 c:\users\cgilmajo\documents\visual studio 2013\Projects\IPBuddy\IPBuddy\bin\Debug\IPBuddy.exe.config
+c:\users\cgilmajo\documents\visual studio 2013\Projects\IPBuddy\IPBuddy\bin\Debug\IPBuddy.exe
+c:\users\cgilmajo\documents\visual studio 2013\Projects\IPBuddy\IPBuddy\bin\Debug\IPBuddy.pdb
+c:\users\cgilmajo\documents\visual studio 2013\Projects\IPBuddy\IPBuddy\obj\Debug\IPBuddy.csprojResolveAssemblyReference.cache
+c:\users\cgilmajo\documents\visual studio 2013\Projects\IPBuddy\IPBuddy\obj\Debug\IPBuddy.Properties.Resources.resources
+c:\users\cgilmajo\documents\visual studio 2013\Projects\IPBuddy\IPBuddy\obj\Debug\IPBuddy.csproj.GenerateResource.Cache
+c:\users\cgilmajo\documents\visual studio 2013\Projects\IPBuddy\IPBuddy\obj\Debug\IPBuddy.exe
+c:\users\cgilmajo\documents\visual studio 2013\Projects\IPBuddy\IPBuddy\obj\Debug\IPBuddy.pdb
+c:\users\cgilmajo\documents\visual studio 2013\Projects\IPBuddy\IPBuddy\obj\Debug\IPBuddy.FormMain.resources
+c:\users\cgilmajo\documents\visual studio 2013\Projects\IPBuddy\IPBuddy\obj\Debug\IPBuddy.FormNewSite.resources
+c:\users\cgilmajo\documents\visual studio 2013\Projects\IPBuddy\IPBuddy\obj\Debug\IPBuddy.FormNewIP.resources
