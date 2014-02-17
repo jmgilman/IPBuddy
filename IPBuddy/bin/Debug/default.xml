@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Sites>
+  <Site Name="Juniper">
+    <IPAddress Name="NAE-1">
+      <Address>123</Address>
+      <SubnetMask>45623423423424</SubnetMask>
+      <DefaultGateway>789</DefaultGateway>
+    </IPAddress>
+    <IPAddress Name="NAE-2">
+      <Address>78</Address>
+      <SubnetMask>45645345</SubnetMask>
+      <DefaultGateway>123234243</DefaultGateway>
+    </IPAddress>
+  </Site>
+</Sites>

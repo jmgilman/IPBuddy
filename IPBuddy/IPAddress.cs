@@ -8,19 +8,22 @@ namespace IPBuddy
 {
     class IPAddress
     {
+        public string Name;
         public string Address;
         public string SubnetMask;
         public string DefaultGateway;
 
         public IPAddress()
         {
+            this.Name = "";
             this.Address = "";
             this.SubnetMask = "";
             this.DefaultGateway = "";
         }
 
-        public IPAddress(string ipAddress, string subnetMask, string defaultGateway)
+        public IPAddress(string name, string ipAddress, string subnetMask, string defaultGateway)
         {
+            this.Name = name;
             this.Address = ipAddress;
             this.SubnetMask = subnetMask;
             this.DefaultGateway = defaultGateway;

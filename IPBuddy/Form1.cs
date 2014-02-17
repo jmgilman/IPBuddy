@@ -7,14 +7,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Xml.Linq;
 
 namespace IPBuddy
 {
     public partial class FormMain : Form
     {
+        private TreeNode selectedNode;
+        private TreeNode lastSelectedIPNode;
+
         public FormMain()
         {
             InitializeComponent();
+            this.selectedNode = new TreeNode();
         }
 
         private void addNewSite()
@@ -45,10 +50,11 @@ namespace IPBuddy
             /** Verify the user clicked OK on the dialog box **/
             if (frmDialog.ShowDialog(this) == DialogResult.OK)
             {
-                IPAddress ip = new IPAddress(frmDialog.txtIPAddress.Text, frmDialog.txtSubnetMask.Text, frmDialog.txtDefaultGateway.Text);
-                TreeNode newNode = new TreeNode(ip.Address);
+                IPAddress ip = new IPAddress(frmDialog.txtName.Text, frmDialog.txtAddress.Text, frmDialog.txtSubnet.Text, frmDialog.txtGateway.Text);
+                TreeNode newNode = new TreeNode(ip.Name);
 
                 newNode.Tag = ip;
+                newNode.ContextMenuStrip = contextMenuIP;
                 node.Nodes.Add(newNode);
 
                 Site site = (Site)node.Tag;
@@ -64,30 +70,57 @@ namespace IPBuddy
 
             foreach (Site site in sites)
             {
-                TreeNode sitenode = new TreeNode(site.Name);
-                sitenode.Tag = site;
-                sitenode.ContextMenuStrip = contextMenuSite;
-
-                foreach (IPAddress ip in site.Addresses)
-                {
-                    TreeNode ipnode = new TreeNode(ip.Address);
-                    ipnode.Tag = ip;
-
-                    sitenode.Nodes.Add(ipnode);
-                }
-
-                treeMainList.Nodes.Add(sitenode);
+                treeMainList.Nodes.Add(SiteToNode(site));
             }
+        }
+
+        private void updateIPSettings()
+        {
+            if (this.lastSelectedIPNode == null)
+            {
+                return;
+            }
+
+            if (this.lastSelectedIPNode.Tag is IPAddress)
+            {
+                IPAddress ip = (IPAddress)this.lastSelectedIPNode.Tag;
+
+                ip.Address = txtSetIP.Text;
+                ip.SubnetMask = txtSetSubnet.Text;
+                ip.DefaultGateway = txtSetGateway.Text;
+            }
+            else
+            {
+                MessageBox.Show("Please select a valid IP address to save");
+            }
+        }
+
+        private TreeNode IPToNode(IPAddress ip)
+        {
+            TreeNode node = new TreeNode(ip.Name);
+            node.Tag = ip;
+            node.ContextMenuStrip = this.contextMenuIP;
+
+            return node;
+        }
+
+        private TreeNode SiteToNode(Site site)
+        {
+            TreeNode node = new TreeNode(site.Name);
+            node.Tag = site;
+            node.ContextMenuStrip = this.contextMenuSite;
+
+            foreach (IPAddress ip in site.Addresses)
+            {
+                node.Nodes.Add(IPToNode(ip));
+            }
+
+            return node;
         }
 
         private void newSiteToolStripMenuItem_Click(object sender, EventArgs e)
         {
             addNewSite();
-        }
-
-        private void contextMenuTree_Opening(object sender, CancelEventArgs e)
-        {
-
         }
 
         private void newSiteToolStripMenuItem1_Click(object sender, EventArgs e)
@@ -110,9 +143,10 @@ namespace IPBuddy
             {
                 IPAddress ip = (IPAddress)e.Node.Tag;
 
-                this.txtIP.Text = ip.Address;
-                this.txtSubnet.Text = ip.SubnetMask;
-                this.txtGateway.Text = ip.DefaultGateway;
+                this.txtSetIP.Text = ip.Address;
+                this.txtSetSubnet.Text = ip.SubnetMask;
+                this.txtSetGateway.Text = ip.DefaultGateway;
+                this.lastSelectedIPNode = e.Node;
             }
         }
 
@@ -120,9 +154,9 @@ namespace IPBuddy
         {
             IPBuddyHelper.LoadNICs(comboNetworkList);
 
-            if (System.IO.File.Exists("test.xml"))
+            if (System.IO.File.Exists("default.xml"))
             {
-                this.loadFromXML("test.xml");
+                this.loadFromXML("default.xml");
             }
         }
 
@@ -136,36 +170,183 @@ namespace IPBuddy
             this.txtGateway.Text = nic.IP.DefaultGateway;
         }
 
-        private void btnSave_Click(object sender, EventArgs e)
+        private void treeMainList_DoubleClick(object sender, EventArgs e)
         {
-            TreeNode selnode = treeMainList.SelectedNode;
-            
-            if (selnode.Tag is IPAddress)
+            if (this.selectedNode != null)
             {
-                IPAddress ip = (IPAddress)selnode.Tag;
+                treeMainList.SelectedNode = this.selectedNode;
+                treeMainList.LabelEdit = true;
+                if (!this.selectedNode.IsEditing)
+                {
+                    this.selectedNode.BeginEdit();
+                }
+            }
+        }
 
-                ip.Address = txtIP.Text;
-                ip.SubnetMask = txtSubnet.Text;
-                ip.DefaultGateway = txtGateway.Text;
+        private void treeMainList_MouseDown(object sender, MouseEventArgs e)
+        {
+            this.selectedNode = treeMainList.GetNodeAt(e.X, e.Y);
+        }
 
-                selnode.Text = txtIP.Text;;
+        private void treeMainList_AfterLabelEdit(object sender, NodeLabelEditEventArgs e)
+        {
+            Console.WriteLine("Label: " + e.Label);
+            if (e.Label == null)
+            {
+                e.CancelEdit = true;
+                return;
+            }
+            else if (e.Label.Length <= 0)
+            {
+                e.CancelEdit = true;
+                return;
             }
             else
             {
-                MessageBox.Show("Please select a valid IP address to save");
+                e.Node.EndEdit(false);
             }
         }
 
-        private void FormMain_FormClosing(object sender, FormClosingEventArgs e)
+        private void NewIPAddressToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            IPBuddyHelper.ExportToXML(treeMainList, "test.xml");
+            if (treeMainList.SelectedNode == null)
+            {
+                MessageBox.Show("Please select a valid site to add an IP address to.");
+            }
+
+            if (treeMainList.SelectedNode.Tag is Site)
+            {
+                addNewIPAddress(treeMainList.SelectedNode);
+            }
+            else
+            {
+                MessageBox.Show("Please select a valid site to add an IP address to.");
+            }
         }
 
-        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        private void exitToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             Application.Exit();
         }
 
+        private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FormAbout frm = new FormAbout();
+            frm.Show();
+        }
 
+        private void saveToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            IPBuddyHelper.ExportToXML(treeMainList, "default.xml");
+        }
+
+        private void txtSetIP_Leave(object sender, EventArgs e)
+        {
+            updateIPSettings();
+        }
+
+        private void txtSetSubnet_Leave(object sender, EventArgs e)
+        {
+            updateIPSettings();
+        }
+
+        private void txtSetGateway_Leave(object sender, EventArgs e)
+        {
+            updateIPSettings();
+        }
+
+        private void copyToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ContextMenuStrip cms = (ContextMenuStrip)((ToolStripMenuItem)sender).Owner;
+            TreeView treeView = (TreeView)cms.SourceControl;
+            TreeNode node = treeView.GetNodeAt(treeView.PointToClient(cms.Location));
+
+            XElement xsite = IPBuddyHelper.SiteToXML((Site)node.Tag);
+            Clipboard.SetText(xsite.ToString());
+        }
+
+        private void pasteToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            if (Clipboard.GetText() == null)
+            {
+                return;
+            }
+
+            if (Clipboard.GetText().Length <= 0)
+            {
+                return;
+            }
+
+            try
+            {
+                XElement element = XElement.Parse(Clipboard.GetText());
+                if (element.Name.LocalName == "Site")
+                {
+                    Site site = IPBuddyHelper.SiteFromXML(element);
+                    treeMainList.Nodes.Add(SiteToNode(site));
+                }
+                else
+                {
+                    MessageBox.Show("Invalid data on the clipboard. Please try copying again.");
+                }
+            }
+            catch
+            {
+                MessageBox.Show("Invalid data on the clipboard. Please try copying again.");
+            }
+        }
+
+        private void copyToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            ContextMenuStrip cms = (ContextMenuStrip)((ToolStripMenuItem)sender).Owner;
+            TreeView treeView = (TreeView)cms.SourceControl;
+            TreeNode node = treeView.GetNodeAt(treeView.PointToClient(cms.Location));
+
+            XElement xip = IPBuddyHelper.IPToXML((IPAddress)node.Tag);
+            Clipboard.SetText(xip.ToString());
+        }
+
+        private void pasteToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (Clipboard.GetText() == null)
+            {
+                return;
+            }
+
+            if (Clipboard.GetText().Length <= 0)
+            {
+                return;
+            }
+
+            if (treeMainList.SelectedNode == null)
+            {
+                MessageBox.Show("Please select a valid site to add an IP address to.");
+            }
+
+            if (treeMainList.SelectedNode.Tag is Site)
+            {
+                try
+                {
+                    XElement element = XElement.Parse(Clipboard.GetText());
+                    if (element.Name.LocalName == "IPAddress")
+                    {
+                        IPAddress ip = IPBuddyHelper.IPFromXML(element);
+                        treeMainList.SelectedNode.Nodes.Add(IPToNode(ip));
+                    }
+                    else
+                    {
+                        MessageBox.Show("Invalid data on the clipboard. Please try copying again.");
+                    }
+                }
+                catch
+                {
+                    MessageBox.Show("Invalid data on the clipboard. Please try copying again.");
+                }
+            }
+            else
+            {
+                MessageBox.Show("Please select a valid site to add an IP address to.");
+            }
+        }
     }
 }

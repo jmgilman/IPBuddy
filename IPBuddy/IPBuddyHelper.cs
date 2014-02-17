@@ -48,6 +48,66 @@ namespace IPBuddy
             }
         }
 
+        public static XElement IPToXML(IPAddress ip)
+        {
+            XElement xip = new XElement("IPAddress", new XAttribute("Name", ip.Name));
+            XElement address = new XElement("Address");
+            XElement subnet = new XElement("SubnetMask");
+            XElement gateway = new XElement("DefaultGateway");
+            ;
+            address.Value = ip.Address;
+            subnet.Value = ip.SubnetMask;
+            gateway.Value = ip.DefaultGateway;
+
+            xip.Add(address);
+            xip.Add(subnet);
+            xip.Add(gateway);
+
+            return xip;
+        }
+
+        public static XElement SiteToXML(Site site)
+        {
+            XElement xsite = new XElement("Site", new XAttribute("Name", site.Name));
+
+            if (site.Addresses != null)
+            {
+                foreach (IPAddress ip in site.Addresses)
+                {
+                    xsite.Add(IPToXML(ip));
+                }
+            }
+
+            return xsite;
+        }
+
+        public static IPAddress IPFromXML(XElement xip)
+        {
+            IPAddress ip = new IPAddress();
+
+            ip.Name = xip.Attribute("Name").Value;
+            ip.Address = xip.Element("Address").Value;
+            ip.SubnetMask = xip.Element("SubnetMask").Value;
+            ip.DefaultGateway = xip.Element("DefaultGateway").Value;
+
+            return ip;
+        }
+
+        public static Site SiteFromXML(XElement xsite)
+        {
+            Site site = new Site(xsite.FirstAttribute.Value);
+
+            if (xsite.HasElements)
+            {
+                foreach (XElement xip in xsite.Elements())
+                {
+                    site.Addresses.Add(IPFromXML(xip));
+                }
+            }
+
+            return site;
+        }
+
         public static void ExportToXML(TreeView tree, String fileName)
         {
             TreeNodeCollection sites = tree.Nodes;
@@ -56,29 +116,7 @@ namespace IPBuddy
             foreach(TreeNode tsite in sites)
             {
                 Site site = (Site)tsite.Tag;
-                XElement xsite = new XElement("Site", new XAttribute("Name", site.Name));
-
-                if (site.Addresses != null)
-                {
-                    foreach (IPAddress ip in site.Addresses)
-                    {
-                        XElement xip = new XElement("IPAddress");
-                        XElement address = new XElement("Address");
-                        XElement subnet = new XElement("SubnetMask");
-                        XElement gateway = new XElement("DefaultGateway");
-
-                        address.Value = ip.Address;
-                        subnet.Value = ip.SubnetMask;
-                        gateway.Value = ip.DefaultGateway;
-
-                        xip.Add(address);
-                        xip.Add(subnet);
-                        xip.Add(gateway);
-
-                        xsite.Add(xip);
-                    }
-                }
-                xsites.Add(xsite);
+                xsites.Add(SiteToXML(site));
             }
 
             var document = new XDocument(xsites);
@@ -92,22 +130,7 @@ namespace IPBuddy
 
             foreach (XElement xsite in document.Root.Elements())
             {
-                Site site = new Site(xsite.FirstAttribute.Value);
-
-                if (xsite.HasElements)
-                {
-                    foreach (XElement xip in xsite.Elements())
-                    {
-                        IPAddress ip = new IPAddress();
-
-                        ip.Address = xip.Element("Address").Value;
-                        ip.SubnetMask = xip.Element("SubnetMask").Value;
-                        ip.DefaultGateway = xip.Element("DefaultGateway").Value;
-
-                        site.Addresses.Add(ip);
-                    }
-                }
-                sites.Add(site);
+                sites.Add(SiteFromXML(xsite));
             }
 
             return sites;

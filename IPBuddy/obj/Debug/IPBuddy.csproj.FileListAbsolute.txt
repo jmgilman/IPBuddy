@@ -9,3 +9,4 @@ c:\users\cgilmajo\documents\visual studio 2013\Projects\IPBuddy\IPBuddy\obj\Debu
 c:\users\cgilmajo\documents\visual studio 2013\Projects\IPBuddy\IPBuddy\obj\Debug\IPBuddy.FormMain.resources
 c:\users\cgilmajo\documents\visual studio 2013\Projects\IPBuddy\IPBuddy\obj\Debug\IPBuddy.FormNewSite.resources
 c:\users\cgilmajo\documents\visual studio 2013\Projects\IPBuddy\IPBuddy\obj\Debug\IPBuddy.FormNewIP.resources
+c:\users\cgilmajo\documents\visual studio 2013\Projects\IPBuddy\IPBuddy\obj\Debug\IPBuddy.FormAbout.resources
