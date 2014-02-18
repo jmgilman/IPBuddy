@@ -8,6 +8,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml.Linq;
+//using System.Management;
+using System.Diagnostics;
 
 namespace IPBuddy
 {
@@ -24,44 +26,35 @@ namespace IPBuddy
 
         private void addNewSite()
         {
-            /** Instantiate a new instance of the dialog box **/
-            FormNewSite frmDialog = new FormNewSite();
+            Site site = new Site("Site Name");
+            TreeNode siteNode = new TreeNode(site.Name);
 
-            /** Verify the user clicked OK on the dialog box **/
-            if (frmDialog.ShowDialog(this) == DialogResult.OK)
+            siteNode.Tag = site;
+            siteNode.ContextMenuStrip = contextMenuSite;
+            treeMainList.LabelEdit = true;
+            treeMainList.Nodes.Add(siteNode);
+
+            if (!siteNode.IsEditing)
             {
-                Site site = new Site(frmDialog.txtSiteName.Text);
-                TreeNode node = new TreeNode(site.Name);
-
-                node.Tag = site;
-                node.ContextMenuStrip = contextMenuSite;
-
-                treeMainList.Nodes.Add(node);
+                siteNode.BeginEdit();
             }
-
-            frmDialog.Dispose();
         }
 
         private void addNewIPAddress(TreeNode node)
         {
-            /** Instantiate a new instance of the dialog box **/
-            FormNewIP frmDialog = new FormNewIP();
+            IPAddress ip = new IPAddress("New IP Address", "192.168.1.10", "255.255.255.0", "192.168.1.1");
+            TreeNode IPNode = new TreeNode(ip.Name);
 
-            /** Verify the user clicked OK on the dialog box **/
-            if (frmDialog.ShowDialog(this) == DialogResult.OK)
+            IPNode.Tag = ip;
+            IPNode.ContextMenuStrip = contextMenuIP;
+            treeMainList.LabelEdit = true;
+            node.Nodes.Add(IPNode);
+
+            treeMainList.SelectedNode = IPNode;
+            if (!IPNode.IsEditing)
             {
-                IPAddress ip = new IPAddress(frmDialog.txtName.Text, frmDialog.txtAddress.Text, frmDialog.txtSubnet.Text, frmDialog.txtGateway.Text);
-                TreeNode newNode = new TreeNode(ip.Name);
-
-                newNode.Tag = ip;
-                newNode.ContextMenuStrip = contextMenuIP;
-                node.Nodes.Add(newNode);
-
-                Site site = (Site)node.Tag;
-                site.Addresses.Add(ip);
+                IPNode.BeginEdit();
             }
-
-            frmDialog.Dispose();
         }
 
         private void loadFromXML(String fileName)
@@ -74,10 +67,17 @@ namespace IPBuddy
             }
         }
 
-        private void updateIPSettings()
+        private void updateIPSettings(TextBox txtip)
         {
             if (this.lastSelectedIPNode == null)
             {
+                return;
+            }
+
+            if (!IPBuddyHelper.IsIPv4(txtip.Text) && !String.IsNullOrEmpty(txtip.Text))
+            {
+                MessageBox.Show("Please enter a valid IPv4 address before continuing.");
+                txtip.Focus();
                 return;
             }
 
@@ -93,6 +93,16 @@ namespace IPBuddy
             {
                 MessageBox.Show("Please select a valid IP address to save");
             }
+        }
+
+        private void updateNICSettings()
+        {
+            NIC nic = (NIC)comboNetworkList.SelectedItem;
+
+            this.txtIP.Text = nic.IP.Address;
+            this.txtSubnet.Text = nic.IP.SubnetMask;
+            this.txtGateway.Text = nic.IP.DefaultGateway;
+            this.lblDHCP.Text = nic.DHCPEnabled.ToString();
         }
 
         private TreeNode IPToNode(IPAddress ip)
@@ -118,11 +128,6 @@ namespace IPBuddy
             return node;
         }
 
-        private void newSiteToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            addNewSite();
-        }
-
         private void newSiteToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             addNewSite();
@@ -137,19 +142,6 @@ namespace IPBuddy
             addNewIPAddress(node);
         }
 
-        private void treeMainList_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
-        {
-            if (e.Node.Tag is IPAddress)
-            {
-                IPAddress ip = (IPAddress)e.Node.Tag;
-
-                this.txtSetIP.Text = ip.Address;
-                this.txtSetSubnet.Text = ip.SubnetMask;
-                this.txtSetGateway.Text = ip.DefaultGateway;
-                this.lastSelectedIPNode = e.Node;
-            }
-        }
-
         private void FormMain_Load(object sender, EventArgs e)
         {
             IPBuddyHelper.LoadNICs(comboNetworkList);
@@ -162,12 +154,7 @@ namespace IPBuddy
 
         private void comboNetworkList_SelectedIndexChanged(object sender, EventArgs e)
         {
-            ComboBox box = (ComboBox)sender;
-            NIC nic = (NIC)box.SelectedItem;
-
-            this.txtIP.Text = nic.IP.Address;
-            this.txtSubnet.Text = nic.IP.SubnetMask;
-            this.txtGateway.Text = nic.IP.DefaultGateway;
+            updateNICSettings();
         }
 
         private void treeMainList_DoubleClick(object sender, EventArgs e)
@@ -190,7 +177,6 @@ namespace IPBuddy
 
         private void treeMainList_AfterLabelEdit(object sender, NodeLabelEditEventArgs e)
         {
-            Console.WriteLine("Label: " + e.Label);
             if (e.Label == null)
             {
                 e.CancelEdit = true;
@@ -231,8 +217,8 @@ namespace IPBuddy
 
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            FormAbout frm = new FormAbout();
-            frm.Show();
+            AboutBox box = new AboutBox();
+            box.Show();
         }
 
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
@@ -242,17 +228,17 @@ namespace IPBuddy
 
         private void txtSetIP_Leave(object sender, EventArgs e)
         {
-            updateIPSettings();
+            updateIPSettings(txtSetIP);
         }
 
         private void txtSetSubnet_Leave(object sender, EventArgs e)
         {
-            updateIPSettings();
+            updateIPSettings(txtSetSubnet);
         }
 
         private void txtSetGateway_Leave(object sender, EventArgs e)
         {
-            updateIPSettings();
+            updateIPSettings(txtSetGateway);
         }
 
         private void copyToolStripMenuItem_Click(object sender, EventArgs e)
@@ -347,6 +333,141 @@ namespace IPBuddy
             {
                 MessageBox.Show("Please select a valid site to add an IP address to.");
             }
+        }
+
+        private void deleteToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            treeMainList.Nodes.Remove(treeMainList.SelectedNode);
+        }
+
+        private void deleteToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            treeMainList.Nodes.Remove(treeMainList.SelectedNode);
+        }
+
+        private void loadToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+
+            openFileDialog.Filter = "XML Files (*.xml)|*.xml|All files (*.*)|*.*";
+            openFileDialog.FilterIndex = 2;
+            openFileDialog.RestoreDirectory = true;
+
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                this.treeMainList.Nodes.Clear();
+                this.loadFromXML(openFileDialog.FileName);
+            }
+        }
+
+        private void saveAsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+
+            saveFileDialog.Filter = "XML Files (*.xml)|*.xml|All files (*.*)|*.*";
+            saveFileDialog.FilterIndex = 2;
+            saveFileDialog.RestoreDirectory = true;
+
+            if (saveFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                IPBuddyHelper.ExportToXML(treeMainList, saveFileDialog.FileName);
+            }
+        }
+
+        private void newSiteToolStripMenuItem2_Click(object sender, EventArgs e)
+        {
+            addNewSite();
+        }
+
+        private void newIPAddressToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            if (treeMainList.SelectedNode == null)
+            {
+                MessageBox.Show("Please select a valid site to add an IP address to.");
+            }
+
+            if (treeMainList.SelectedNode.Tag is Site)
+            {
+                addNewIPAddress(treeMainList.SelectedNode);
+            }
+            else
+            {
+                MessageBox.Show("Please select a valid site to add an IP address to.");
+            }
+        }
+
+        private void btnSetIP_Click(object sender, EventArgs e)
+        {
+            NIC nic = (NIC)comboNetworkList.SelectedItem;
+            string cmd = String.Format("interface ip set address \"{0}\" static {1} {2} {3}", nic.Name, txtSetIP.Text, txtSetSubnet.Text, txtSetGateway.Text);
+
+            Process p = new Process();
+            ProcessStartInfo psi = new ProcessStartInfo("netsh", cmd);
+            psi.Verb = "runas";
+            psi.WindowStyle = ProcessWindowStyle.Hidden;
+            p.StartInfo = psi;
+
+            p.Start();
+            p.WaitForExit();
+
+            IPBuddyHelper.LoadNICs(comboNetworkList);
+
+            foreach (Object objnic in comboNetworkList.Items)
+            {
+                NIC cnic = (NIC)objnic;
+                if (cnic.Name.Equals(nic.Name))
+                {
+                    comboNetworkList.SelectedItem = objnic;
+                }
+            }
+
+            updateNICSettings();
+        }
+
+        private void treeMainList_AfterSelect(object sender, TreeViewEventArgs e)
+        {
+            if (e.Node.Tag is IPAddress)
+            {
+                IPAddress ip = (IPAddress)e.Node.Tag;
+
+                this.txtSetIP.Text = ip.Address;
+                this.txtSetSubnet.Text = ip.SubnetMask;
+                this.txtSetGateway.Text = ip.DefaultGateway;
+                this.lastSelectedIPNode = e.Node;
+            }
+        }
+
+        private void btnResetDHCP_Click(object sender, EventArgs e)
+        {
+            NIC nic = (NIC)comboNetworkList.SelectedItem;
+            string cmd = String.Format("interface ip set address \"{0}\" dhcp", nic.Name);
+
+            Process p = new Process();
+            ProcessStartInfo psi = new ProcessStartInfo("netsh", cmd);
+            psi.Verb = "runas";
+            psi.WindowStyle = ProcessWindowStyle.Hidden;
+            p.StartInfo = psi;
+
+            p.Start();
+            p.WaitForExit();
+
+            IPBuddyHelper.LoadNICs(comboNetworkList);
+
+            foreach(Object objnic in comboNetworkList.Items)
+            {
+                NIC cnic = (NIC)objnic;
+                if (cnic.Name.Equals(nic.Name))
+                {
+                    comboNetworkList.SelectedItem = objnic;
+                }
+            }
+
+            updateNICSettings();
+        }
+
+        private void helpToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            System.Windows.Forms.Help.ShowHelp(this, "IPBuddy.chm");
         }
     }
 }

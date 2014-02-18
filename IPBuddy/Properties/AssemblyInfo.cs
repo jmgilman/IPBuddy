@@ -6,11 +6,11 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("IPBuddy")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("IPBuddy is a tool designed to assist Johnson Controls technicians in the everyday task of changing their system’s IP settings.")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Johnson Control Inc")]
+[assembly: AssemblyCompany("Johnson Controls")]
 [assembly: AssemblyProduct("IPBuddy")]
-[assembly: AssemblyCopyright("Copyright © Johnson Control Inc 2014")]
+[assembly: AssemblyCopyright("Copyright © Johnson Controls 2014")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

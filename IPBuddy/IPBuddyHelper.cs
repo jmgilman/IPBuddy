@@ -13,6 +13,8 @@ namespace IPBuddy
     {
         public static void LoadNICs(ComboBox box)
         {
+            box.Items.Clear();
+
             /** Scan through each NIC interface **/
             foreach (NetworkInterface nic in NetworkInterface.GetAllNetworkInterfaces())
             {
@@ -46,6 +48,29 @@ namespace IPBuddy
                     box.Items.Add(newNic);
                 }
             }
+
+            if (box.Items.Count > 0)
+            {
+                box.SelectedIndex = 0;
+            }
+        }
+
+        public static bool IsIPv4(string value)
+        {
+            var quads = value.Split('.');
+            if (!(quads.Length == 4)) return false;
+
+            foreach (var quad in quads)
+            {
+                int q;
+                if (!Int32.TryParse(quad, out q)
+                    || !q.ToString().Length.Equals(quad.Length)
+                    || q < 0
+                    || q > 255) { return false; }
+
+            }
+
+            return true;
         }
 
         public static XElement IPToXML(IPAddress ip)

@@ -31,8 +31,9 @@
             this.components = new System.ComponentModel.Container();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.newSiteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.NewIPAddressToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.newToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.newSiteToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
+            this.newIPAddressToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.loadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveAsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -64,15 +65,19 @@
             this.contextMenuSite = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.addNewIPToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.copyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.pasteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.contextMenuIP = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.pasteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.deleteToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.copyToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.deleteToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.label4 = new System.Windows.Forms.Label();
+            this.lblDHCP = new System.Windows.Forms.Label();
+            this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.contextMenuTree.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox3.SuspendLayout();
+            this.groupBox2.SuspendLayout();
             this.contextMenuSite.SuspendLayout();
             this.contextMenuIP.SuspendLayout();
             this.SuspendLayout();
@@ -82,7 +87,8 @@
             this.menuStrip1.GripStyle = System.Windows.Forms.ToolStripGripStyle.Visible;
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
-            this.aboutToolStripMenuItem});
+            this.aboutToolStripMenuItem,
+            this.helpToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(372, 24);
@@ -92,8 +98,7 @@
             // fileToolStripMenuItem
             // 
             this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.newSiteToolStripMenuItem,
-            this.NewIPAddressToolStripMenuItem,
+            this.newToolStripMenuItem,
             this.loadToolStripMenuItem,
             this.saveToolStripMenuItem,
             this.saveAsToolStripMenuItem,
@@ -103,37 +108,46 @@
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(38, 20);
             this.fileToolStripMenuItem.Text = "File";
             // 
-            // newSiteToolStripMenuItem
+            // newToolStripMenuItem
             // 
-            this.newSiteToolStripMenuItem.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.newSiteToolStripMenuItem.Name = "newSiteToolStripMenuItem";
-            this.newSiteToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.N)));
-            this.newSiteToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
-            this.newSiteToolStripMenuItem.Text = "New Site";
-            this.newSiteToolStripMenuItem.Click += new System.EventHandler(this.newSiteToolStripMenuItem_Click);
+            this.newToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.newSiteToolStripMenuItem2,
+            this.newIPAddressToolStripMenuItem1});
+            this.newToolStripMenuItem.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.newToolStripMenuItem.Name = "newToolStripMenuItem";
+            this.newToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
+            this.newToolStripMenuItem.Text = "New";
             // 
-            // NewIPAddressToolStripMenuItem
+            // newSiteToolStripMenuItem2
             // 
-            this.NewIPAddressToolStripMenuItem.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.NewIPAddressToolStripMenuItem.Name = "NewIPAddressToolStripMenuItem";
-            this.NewIPAddressToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
-            this.NewIPAddressToolStripMenuItem.Text = "New IP Address";
-            this.NewIPAddressToolStripMenuItem.Click += new System.EventHandler(this.NewIPAddressToolStripMenuItem_Click);
+            this.newSiteToolStripMenuItem2.Name = "newSiteToolStripMenuItem2";
+            this.newSiteToolStripMenuItem2.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.N)));
+            this.newSiteToolStripMenuItem2.Size = new System.Drawing.Size(163, 22);
+            this.newSiteToolStripMenuItem2.Text = "New Site";
+            this.newSiteToolStripMenuItem2.Click += new System.EventHandler(this.newSiteToolStripMenuItem2_Click);
+            // 
+            // newIPAddressToolStripMenuItem1
+            // 
+            this.newIPAddressToolStripMenuItem1.Name = "newIPAddressToolStripMenuItem1";
+            this.newIPAddressToolStripMenuItem1.Size = new System.Drawing.Size(163, 22);
+            this.newIPAddressToolStripMenuItem1.Text = "New IP Address";
+            this.newIPAddressToolStripMenuItem1.Click += new System.EventHandler(this.newIPAddressToolStripMenuItem1_Click);
             // 
             // loadToolStripMenuItem
             // 
             this.loadToolStripMenuItem.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.loadToolStripMenuItem.Name = "loadToolStripMenuItem";
-            this.loadToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.L)));
-            this.loadToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
-            this.loadToolStripMenuItem.Text = "Load";
+            this.loadToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
+            this.loadToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
+            this.loadToolStripMenuItem.Text = "Open";
+            this.loadToolStripMenuItem.Click += new System.EventHandler(this.loadToolStripMenuItem_Click);
             // 
             // saveToolStripMenuItem
             // 
             this.saveToolStripMenuItem.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
             this.saveToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
             this.saveToolStripMenuItem.Text = "Save";
             this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
             // 
@@ -141,15 +155,16 @@
             // 
             this.saveAsToolStripMenuItem.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.saveAsToolStripMenuItem.Name = "saveAsToolStripMenuItem";
-            this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
+            this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
             this.saveAsToolStripMenuItem.Text = "Save As";
+            this.saveAsToolStripMenuItem.Click += new System.EventHandler(this.saveAsToolStripMenuItem_Click);
             // 
             // exitToolStripMenuItem1
             // 
             this.exitToolStripMenuItem1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.exitToolStripMenuItem1.Name = "exitToolStripMenuItem1";
             this.exitToolStripMenuItem1.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.E)));
-            this.exitToolStripMenuItem1.Size = new System.Drawing.Size(163, 22);
+            this.exitToolStripMenuItem1.Size = new System.Drawing.Size(146, 22);
             this.exitToolStripMenuItem1.Text = "Exit";
             this.exitToolStripMenuItem1.Click += new System.EventHandler(this.exitToolStripMenuItem1_Click);
             // 
@@ -164,12 +179,13 @@
             // treeMainList
             // 
             this.treeMainList.ContextMenuStrip = this.contextMenuTree;
+            this.treeMainList.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.treeMainList.Location = new System.Drawing.Point(13, 316);
             this.treeMainList.Name = "treeMainList";
             this.treeMainList.Size = new System.Drawing.Size(347, 189);
             this.treeMainList.TabIndex = 1;
             this.treeMainList.AfterLabelEdit += new System.Windows.Forms.NodeLabelEditEventHandler(this.treeMainList_AfterLabelEdit);
-            this.treeMainList.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.treeMainList_NodeMouseClick);
+            this.treeMainList.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeMainList_AfterSelect);
             this.treeMainList.DoubleClick += new System.EventHandler(this.treeMainList_DoubleClick);
             this.treeMainList.MouseDown += new System.Windows.Forms.MouseEventHandler(this.treeMainList_MouseDown);
             // 
@@ -184,7 +200,7 @@
             // newSiteToolStripMenuItem1
             // 
             this.newSiteToolStripMenuItem1.Name = "newSiteToolStripMenuItem1";
-            this.newSiteToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
+            this.newSiteToolStripMenuItem1.Size = new System.Drawing.Size(143, 22);
             this.newSiteToolStripMenuItem1.Text = "New Site";
             this.newSiteToolStripMenuItem1.Click += new System.EventHandler(this.newSiteToolStripMenuItem1_Click);
             // 
@@ -192,7 +208,7 @@
             // 
             this.pasteToolStripMenuItem1.Name = "pasteToolStripMenuItem1";
             this.pasteToolStripMenuItem1.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.V)));
-            this.pasteToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
+            this.pasteToolStripMenuItem1.Size = new System.Drawing.Size(143, 22);
             this.pasteToolStripMenuItem1.Text = "Paste";
             this.pasteToolStripMenuItem1.Click += new System.EventHandler(this.pasteToolStripMenuItem1_Click);
             // 
@@ -353,24 +369,28 @@
             // 
             // btnResetDHCP
             // 
-            this.btnResetDHCP.Location = new System.Drawing.Point(213, 254);
+            this.btnResetDHCP.Location = new System.Drawing.Point(176, 254);
             this.btnResetDHCP.Name = "btnResetDHCP";
-            this.btnResetDHCP.Size = new System.Drawing.Size(95, 23);
+            this.btnResetDHCP.Size = new System.Drawing.Size(135, 23);
             this.btnResetDHCP.TabIndex = 5;
             this.btnResetDHCP.Text = "Reset to DHCP";
             this.btnResetDHCP.UseVisualStyleBackColor = true;
+            this.btnResetDHCP.Click += new System.EventHandler(this.btnResetDHCP_Click);
             // 
             // btnSetIP
             // 
-            this.btnSetIP.Location = new System.Drawing.Point(39, 254);
+            this.btnSetIP.Location = new System.Drawing.Point(35, 254);
             this.btnSetIP.Name = "btnSetIP";
-            this.btnSetIP.Size = new System.Drawing.Size(95, 23);
+            this.btnSetIP.Size = new System.Drawing.Size(135, 23);
             this.btnSetIP.TabIndex = 4;
             this.btnSetIP.Text = "Set IP";
             this.btnSetIP.UseVisualStyleBackColor = true;
+            this.btnSetIP.Click += new System.EventHandler(this.btnSetIP_Click);
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.lblDHCP);
+            this.groupBox2.Controls.Add(this.label4);
             this.groupBox2.Location = new System.Drawing.Point(6, 15);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(335, 125);
@@ -386,7 +406,7 @@
             this.pasteToolStripMenuItem,
             this.deleteToolStripMenuItem});
             this.contextMenuSite.Name = "contextMenuSite";
-            this.contextMenuSite.Size = new System.Drawing.Size(153, 114);
+            this.contextMenuSite.Size = new System.Drawing.Size(145, 92);
             // 
             // addNewIPToolStripMenuItem
             // 
@@ -403,11 +423,20 @@
             this.copyToolStripMenuItem.Text = "Copy";
             this.copyToolStripMenuItem.Click += new System.EventHandler(this.copyToolStripMenuItem_Click);
             // 
+            // pasteToolStripMenuItem
+            // 
+            this.pasteToolStripMenuItem.Name = "pasteToolStripMenuItem";
+            this.pasteToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.V)));
+            this.pasteToolStripMenuItem.Size = new System.Drawing.Size(144, 22);
+            this.pasteToolStripMenuItem.Text = "Paste";
+            this.pasteToolStripMenuItem.Click += new System.EventHandler(this.pasteToolStripMenuItem_Click);
+            // 
             // deleteToolStripMenuItem
             // 
             this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
             this.deleteToolStripMenuItem.Size = new System.Drawing.Size(144, 22);
             this.deleteToolStripMenuItem.Text = "Delete";
+            this.deleteToolStripMenuItem.Click += new System.EventHandler(this.deleteToolStripMenuItem_Click);
             // 
             // contextMenuIP
             // 
@@ -417,26 +446,45 @@
             this.contextMenuIP.Name = "contextMenuIP";
             this.contextMenuIP.Size = new System.Drawing.Size(108, 48);
             // 
-            // pasteToolStripMenuItem
+            // copyToolStripMenuItem1
             // 
-            this.pasteToolStripMenuItem.Name = "pasteToolStripMenuItem";
-            this.pasteToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.V)));
-            this.pasteToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.pasteToolStripMenuItem.Text = "Paste";
-            this.pasteToolStripMenuItem.Click += new System.EventHandler(this.pasteToolStripMenuItem_Click);
+            this.copyToolStripMenuItem1.Name = "copyToolStripMenuItem1";
+            this.copyToolStripMenuItem1.Size = new System.Drawing.Size(107, 22);
+            this.copyToolStripMenuItem1.Text = "Copy";
+            this.copyToolStripMenuItem1.Click += new System.EventHandler(this.copyToolStripMenuItem1_Click);
             // 
             // deleteToolStripMenuItem1
             // 
             this.deleteToolStripMenuItem1.Name = "deleteToolStripMenuItem1";
             this.deleteToolStripMenuItem1.Size = new System.Drawing.Size(107, 22);
             this.deleteToolStripMenuItem1.Text = "Delete";
+            this.deleteToolStripMenuItem1.Click += new System.EventHandler(this.deleteToolStripMenuItem1_Click);
             // 
-            // copyToolStripMenuItem1
+            // label4
             // 
-            this.copyToolStripMenuItem1.Name = "copyToolStripMenuItem1";
-            this.copyToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
-            this.copyToolStripMenuItem1.Text = "Copy";
-            this.copyToolStripMenuItem1.Click += new System.EventHandler(this.copyToolStripMenuItem1_Click);
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(103, 40);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(85, 13);
+            this.label4.TabIndex = 0;
+            this.label4.Text = "DHCP Enabled: ";
+            // 
+            // lblDHCP
+            // 
+            this.lblDHCP.AutoSize = true;
+            this.lblDHCP.Location = new System.Drawing.Point(184, 39);
+            this.lblDHCP.Name = "lblDHCP";
+            this.lblDHCP.Size = new System.Drawing.Size(0, 13);
+            this.lblDHCP.TabIndex = 1;
+            // 
+            // helpToolStripMenuItem
+            // 
+            this.helpToolStripMenuItem.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
+            this.helpToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F1;
+            this.helpToolStripMenuItem.Size = new System.Drawing.Size(45, 20);
+            this.helpToolStripMenuItem.Text = "Help";
+            this.helpToolStripMenuItem.Click += new System.EventHandler(this.helpToolStripMenuItem_Click);
             // 
             // FormMain
             // 
@@ -457,6 +505,8 @@
             this.groupBox1.PerformLayout();
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
+            this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
             this.contextMenuSite.ResumeLayout(false);
             this.contextMenuIP.ResumeLayout(false);
             this.ResumeLayout(false);
@@ -468,8 +518,6 @@
 
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem newSiteToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem NewIPAddressToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
         private System.Windows.Forms.TreeView treeMainList;
         private System.Windows.Forms.ComboBox comboNetworkList;
@@ -506,6 +554,12 @@
         private System.Windows.Forms.ToolStripMenuItem pasteToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem deleteToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem copyToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem newToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem newSiteToolStripMenuItem2;
+        private System.Windows.Forms.ToolStripMenuItem newIPAddressToolStripMenuItem1;
+        private System.Windows.Forms.Label lblDHCP;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
     }
 }
 

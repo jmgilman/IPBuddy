@@ -1,0 +1,51 @@
+<html>
+	<head>
+		<title>Overview</title>
+	</head>
+	<body>
+		<h1>Overview</h1>
+		<p>IPBuddy at its core is a very simple program to operate. IPBuddy stores all information in a tree-like list located at the bottom of the main program panel. This list consists of sites and IP addresses which are used for organization. A site is a physical location in the world, like a customer's building. Since each site can contain multiple controllers which in turn can be on different subnets, each site in IPBuddy can have multiple IP addresses. The goal of this type of structure is to allow a technician to keep all of their commonly used IP addresses organized to the various sites they visit on a normal basis. These IP addresses are then used to directly configure a network adapter's static IP address. These concepts are summarized below:</p>
+		<h2>Adding a Site</h2>
+		<p>There are two methods to adding a site:
+			<ul>
+				<li>Click the 'File' button at the top of the program and from the resulting drop-down list select 'New' and then 'New Site'.</li>
+				<li>Right click on the main list and select 'New Site' from the resulting drop-down list.</li>
+			</ul>
+			 Both of these options add a new site to the list with a default name of 'Site Name'. By default, the program will prompt you to edit this value to something more meaningful. 
+		</p>
+		<p>To change an existing site's name, simply double-click the site name in the list.</p>
+		<p>To delete a site, right-click the site name in the main list and select 'Delete' from the resulting drop-down menu.</p>
+		<p>To duplicate a site right-click the site name and select 'Copy' and then right-click anywhere in the main list and select 'Paste'. This will copy the site and all of its contents into a new site.</p>
+		<h2>Adding a IP Address</h2>
+		<p>There are two methods to adding an IP address:
+			<ul>
+				<li>Select the site you wish to add an IP address to in the main list. Click the 'File' button at the top of the program and from the resulting drop-down list select 'New' and then 'New IP Address'.</li>
+				<li>Right click on the site you wish to add an IP address to in the main list and select 'Add New IP'.</li>
+			</ul>
+			Both of these options add a new IP address to the selected site with a default name of 'New IP Address'. By default, the program will prompt you to edit this value to something more meaningful. Furthermore, the program will automatically assign generic IP settings to the new IP address which you can edit later.
+		</p>
+		<p>To edit an IP address, select the IP address in the main list. This will automatically populate the text fields under 'Set IP Settings' with the IP address' saved values. Changing these values will automatically save them to the IP address.</p>
+		<p>To delete an IP address, right-click the IP address name in the main list and select 'Delete' from the resulting drop-down menu.</p>
+		<p>To duplicate an IP address right-click the IP address name and select 'Copy' and then right-click on the site you wish to duplicate it to and select 'Paste'. This will copy over all existing IP settings.</p>
+		<h2>Setting a Static IP Address</h2>
+		<p>To set a static IP address, do the following:
+			<ul>
+				<li>Select an IP address from the main list and ensure the fields in 'Set IP Settings' are populated with the correct addresses.</li>
+				<li>Under 'Network Settings' ensure the 'Select Network' box is selected to the network adapter that you wish to assign the IP address to.</li>
+				<li>Click the 'Set IP' button. Please note that changing IP addresses requires administrative rights on Windows machines and Windows may prompt you to allow the program to continue. Please select 'Yes' to this prompt to allow the program to work correctly.</li>
+			</ul>
+		</p>
+		<h2>Reverting an Adapter to DHCP</h2>
+		<p>To return a network adapter back to DHCP, do the following:
+			<ul>
+				<li>Under 'Network Settings' ensure the 'Select Network' box is selected to the network adapter that you wish to return to DHCP.</li>
+				<li>Click the 'Reset to DHCP' button. Please note that changing DHCP settings requires administrative rights on Windows machines and Windows may prompt you to allow the program to continue. Please select 'Yes' to this prompt to allow the program to work correctly.</li>
+			</ul>
+		</p>
+		<h2>Saving Your Configured Settings</h2>
+		<p>Please note that by default the program does not save your configured settings. IPBuddy stores all program settings in an XML format.</p>
+		<p>To save your settings, click the 'File' button at the top of the program and select the 'Save' option from the resulting drop-down list. This will save your current settings to the file 'default.xml' in the current program directory. When the program starts it automatically searches for this 'default.xml' file and loads it upon starting up.</p>
+		<p>To save your settings to a different file other than 'default.xml', click the 'File' button at the top of the program and select 'Save As' from the resulting drop-down list. The program will open a file dialog and prompt you for the location to save the configuration file to. Select a location and name for the file and then click 'Save'.</p>
+		<p>To load previous settings you saved in a configuration file, click the 'File' button at the top of the program and select 'Open' from the resulting drop-down list. The program will open a file dialog and prompt for the location of the previously saved configuration file. Select the file and then select 'Open' to load the configuration file into the program. Please note this overrides any existing configuration settings in the program.</p>
+	</body>
+</html>
