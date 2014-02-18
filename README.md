@@ -1,4 +1,5 @@
 IPBuddy
 =======
 
-IPBuddy is a tool designed to assist Johnson Controls service technicians by minimizing the amount of work required to change IP settings in Windows machines.
+IPBuddy is a tool designed to assist Johnson Controls technicians in the everyday task of changing their system’s IP settings. Due to the diverse nature of customer’s existing network infrastructure it is often necessary for technicians to statically set their IP addresses to place their computer on the same subnet as network control engines. This is especially true when a technician is trying to communicate locally with the controller via a switch.
+IPBuddy helps expedite this process in two primary ways: It reduces the work in setting a static IP address to one click of a button and it allows commonly used IP addresses to be stored in an organized manner. These two features combined allow a technician to be ready to connect to a local controller in a minimal amount of time.
