@@ -73,6 +73,8 @@
             this.label4 = new System.Windows.Forms.Label();
             this.lblDHCP = new System.Windows.Forms.Label();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.broadcastToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.textBox1 = new System.Windows.Forms.TextBox();
             this.menuStrip1.SuspendLayout();
             this.contextMenuTree.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -88,7 +90,8 @@
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
             this.aboutToolStripMenuItem,
-            this.helpToolStripMenuItem});
+            this.helpToolStripMenuItem,
+            this.broadcastToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(372, 24);
@@ -486,11 +489,26 @@
             this.helpToolStripMenuItem.Text = "Help";
             this.helpToolStripMenuItem.Click += new System.EventHandler(this.helpToolStripMenuItem_Click);
             // 
+            // broadcastToolStripMenuItem
+            // 
+            this.broadcastToolStripMenuItem.Name = "broadcastToolStripMenuItem";
+            this.broadcastToolStripMenuItem.Size = new System.Drawing.Size(71, 20);
+            this.broadcastToolStripMenuItem.Text = "Broadcast";
+            this.broadcastToolStripMenuItem.Click += new System.EventHandler(this.broadcastToolStripMenuItem_Click);
+            // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(13, 522);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(347, 20);
+            this.textBox1.TabIndex = 5;
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(372, 512);
+            this.ClientSize = new System.Drawing.Size(372, 554);
+            this.Controls.Add(this.textBox1);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.treeMainList);
             this.Controls.Add(this.menuStrip1);
@@ -560,6 +578,8 @@
         private System.Windows.Forms.Label lblDHCP;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem broadcastToolStripMenuItem;
+        private System.Windows.Forms.TextBox textBox1;
     }
 }
 
