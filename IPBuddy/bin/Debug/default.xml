@@ -1,15 +1,31 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Sites>
   <Site Name="Juniper">
-    <IPAddress Name="NAE-1">
-      <Address>10.0.0.15</Address>
-      <SubnetMask>255.255.255.0</SubnetMask>
-      <DefaultGateway>10.0.0.1</DefaultGateway>
-    </IPAddress>
-    <IPAddress Name="NAE-2">
-      <Address>78</Address>
-      <SubnetMask>45645345</SubnetMask>
-      <DefaultGateway>123234243</DefaultGateway>
-    </IPAddress>
+    <NAEs>
+      <NAE Name="NAE1">
+        <IPAddress></IPAddress>
+        <MAC></MAC>
+        <OSVersion></OSVersion>
+        <MSEAVersion></MSEAVersion>
+        <NeuronID></NeuronID>
+        <StaticIP>
+          <Address></Address>
+          <SubnetMask></SubnetMask>
+          <DefaultGateway></DefaultGateway>
+        </StaticIP>
+      </NAE>
+      <NAE Name="NAE2">
+        <IPAddress></IPAddress>
+        <MAC></MAC>
+        <OSVersion></OSVersion>
+        <MSEAVersion></MSEAVersion>
+        <NeuronID></NeuronID>
+        <StaticIP>
+          <Address></Address>
+          <SubnetMask></SubnetMask>
+          <DefaultGateway></DefaultGateway>
+        </StaticIP>
+      </NAE>
+    </NAEs>
   </Site>
 </Sites>

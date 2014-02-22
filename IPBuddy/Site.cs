@@ -3,23 +3,44 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace IPBuddy
 {
     class Site
     {
-        public String Name;
-        public List<IPAddress> Addresses;
+        public String Name = "";
+        public List<NAE> NAEs = new List<NAE>();
 
-        public Site(string siteName)
+        public XElement ToXML()
         {
-            this.Name = siteName;
-            this.Addresses = new List<IPAddress>();
+            XElement xsite = new XElement("Site", new XAttribute("Name", this.Name));
+            XElement xnaes = new XElement("NAEs");
+
+            if (this.NAEs != null)
+            {
+                foreach (NAE nae in this.NAEs)
+                {
+                    xnaes.Add(nae.ToXML());
+                }
+            }
+
+            xsite.Add(xnaes);
+            return xsite;
         }
 
-        public void AddIP(IPAddress ip)
+        public static Site FromXML(XElement xsite)
         {
-            this.Addresses.Add(ip);
+            List<NAE> naes = new List<NAE>();
+            foreach (XElement xnae in xsite.Element("NAEs").Elements())
+            {
+                naes.Add(NAE.FromXML(xnae));
+            }
+
+            Site site = new Site {Name = xsite.Attribute("Name").Value,
+                                  NAEs = naes };
+
+            return site;
         }
     }
 }

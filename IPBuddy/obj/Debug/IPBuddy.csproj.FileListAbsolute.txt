@@ -6,10 +6,6 @@ c:\users\cgilmajo\documents\visual studio 2013\Projects\IPBuddy\IPBuddy\obj\Debu
 c:\users\cgilmajo\documents\visual studio 2013\Projects\IPBuddy\IPBuddy\obj\Debug\IPBuddy.csproj.GenerateResource.Cache
 c:\users\cgilmajo\documents\visual studio 2013\Projects\IPBuddy\IPBuddy\obj\Debug\IPBuddy.exe
 c:\users\cgilmajo\documents\visual studio 2013\Projects\IPBuddy\IPBuddy\obj\Debug\IPBuddy.pdb
-c:\users\cgilmajo\documents\visual studio 2013\Projects\IPBuddy\IPBuddy\obj\Debug\IPBuddy.FormMain.resources
-c:\users\cgilmajo\documents\visual studio 2013\Projects\IPBuddy\IPBuddy\obj\Debug\IPBuddy.FormNewSite.resources
-c:\users\cgilmajo\documents\visual studio 2013\Projects\IPBuddy\IPBuddy\obj\Debug\IPBuddy.FormNewIP.resources
-c:\users\cgilmajo\documents\visual studio 2013\Projects\IPBuddy\IPBuddy\obj\Debug\IPBuddy.FormAbout.resources
 C:\Users\josh\Documents\Visual Studio 2013\Projects\IPBuddy\IPBuddy\bin\Debug\IPBuddy.exe.config
 C:\Users\josh\Documents\Visual Studio 2013\Projects\IPBuddy\IPBuddy\bin\Debug\IPBuddy.exe
 C:\Users\josh\Documents\Visual Studio 2013\Projects\IPBuddy\IPBuddy\bin\Debug\IPBuddy.pdb
@@ -32,3 +28,13 @@ C:\Users\josh\Documents\Visual Studio 2013\Projects\IPBuddy\IPBuddy\bin\Debug\Pc
 C:\Users\josh\Documents\Visual Studio 2013\Projects\IPBuddy\IPBuddy\bin\Debug\PcapDotNet.Core.Extensions.xml
 C:\Users\josh\Documents\Visual Studio 2013\Projects\IPBuddy\IPBuddy\bin\Debug\PcapDotNet.Packets.pdb
 C:\Users\josh\Documents\Visual Studio 2013\Projects\IPBuddy\IPBuddy\bin\Debug\PcapDotNet.Packets.xml
+C:\Users\cgilmajo\Documents\Visual Studio 2013\Projects\IPBuddy\IPBuddy\bin\Debug\PcapDotNet.Base.pdb
+C:\Users\cgilmajo\Documents\Visual Studio 2013\Projects\IPBuddy\IPBuddy\bin\Debug\PcapDotNet.Base.xml
+C:\Users\cgilmajo\Documents\Visual Studio 2013\Projects\IPBuddy\IPBuddy\bin\Debug\PcapDotNet.Core.pdb
+C:\Users\cgilmajo\Documents\Visual Studio 2013\Projects\IPBuddy\IPBuddy\bin\Debug\PcapDotNet.Core.xml
+C:\Users\cgilmajo\Documents\Visual Studio 2013\Projects\IPBuddy\IPBuddy\bin\Debug\PcapDotNet.Core.Extensions.pdb
+C:\Users\cgilmajo\Documents\Visual Studio 2013\Projects\IPBuddy\IPBuddy\bin\Debug\PcapDotNet.Core.Extensions.xml
+C:\Users\cgilmajo\Documents\Visual Studio 2013\Projects\IPBuddy\IPBuddy\bin\Debug\PcapDotNet.Packets.pdb
+C:\Users\cgilmajo\Documents\Visual Studio 2013\Projects\IPBuddy\IPBuddy\bin\Debug\PcapDotNet.Packets.xml
+C:\Users\cgilmajo\Documents\Visual Studio 2013\Projects\IPBuddy\IPBuddy\obj\Debug\IPBuddy.AboutBox.resources
+C:\Users\cgilmajo\documents\visual studio 2013\Projects\IPBuddy\IPBuddy\obj\Debug\IPBuddy.frmMain.resources

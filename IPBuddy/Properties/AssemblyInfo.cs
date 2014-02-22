@@ -6,11 +6,11 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("IPBuddy")]
-[assembly: AssemblyDescription("IPBuddy is a tool designed to assist Johnson Controls technicians in the everyday task of changing their system’s IP settings.")]
+[assembly: AssemblyDescription("IPBuddy is a tool designed to assist Johnson Controls technicians in the everyday task of connecting to network controllers")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Johnson Controls")]
+[assembly: AssemblyCompany("Alias Projects")]
 [assembly: AssemblyProduct("IPBuddy")]
-[assembly: AssemblyCopyright("Copyright © Johnson Controls 2014")]
+[assembly: AssemblyCopyright("Copyright © Joshua Gilman 2014")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -32,5 +32,5 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.0.0.0")]
-[assembly: AssemblyFileVersion("1.0.0.0")]
+[assembly: AssemblyVersion("2.0.0.0")]
+[assembly: AssemblyFileVersion("2.0.0.0")]
