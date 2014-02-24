@@ -56,6 +56,15 @@ namespace IPBuddy
             siteNode.Tag = site;
             siteNode.ContextMenuStrip = frmMain.StaticContextSite;
 
+            foreach(NAE nae in site.NAEs)
+            {
+                TreeNode naeNode = new TreeNode(nae.Name);
+                naeNode.Tag = nae;
+                naeNode.ContextMenuStrip = frmMain.StaticContextNAE;
+
+                siteNode.Nodes.Add(naeNode);
+            }
+
             nodes.Add(siteNode);
         }
 

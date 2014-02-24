@@ -7,7 +7,7 @@ using System.Xml.Linq;
 
 namespace IPBuddy
 {
-    class StaticIP
+    public class StaticIP
     {
         public string Address = "";
         public string SubnetMask = "";

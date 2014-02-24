@@ -46,7 +46,13 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Resources\IPBuddyIcon.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
+    <Reference Include="PacketDotNet">
+      <HintPath>..\..\..\..\..\..\Program Files (x86)\Johnson Controls\Metasys\NAE Information and Configuration Tool\PacketDotNet.dll</HintPath>
+    </Reference>
     <Reference Include="PcapDotNet.Base">
       <HintPath>..\..\..\..\..\Downloads\Compressed\PcapDotNet.Binaries.0.10.0.67076\PcapDotNet.Binaries.0.10.0.67076\PcapDotNet.Binaries.0.10.0.67076.x86\PcapDotNet.Base.dll</HintPath>
     </Reference>
@@ -79,6 +85,18 @@
       <DependentUpon>AboutBox.cs</DependentUpon>
     </Compile>
     <Compile Include="FormHandler.cs" />
+    <Compile Include="frmImport.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmImport.Designer.cs">
+      <DependentUpon>frmImport.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmListener.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmListener.Designer.cs">
+      <DependentUpon>frmListener.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmMain.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -86,7 +104,8 @@
       <DependentUpon>frmMain.cs</DependentUpon>
     </Compile>
     <Compile Include="NAE.cs" />
-    <Compile Include="NAETracker.cs" />
+    <Compile Include="NAEListener.cs" />
+    <Compile Include="NAEHandler.cs" />
     <Compile Include="NIC.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -95,6 +114,12 @@
     <Compile Include="StaticIP.cs" />
     <EmbeddedResource Include="AboutBox.resx">
       <DependentUpon>AboutBox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmImport.resx">
+      <DependentUpon>frmImport.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmListener.resx">
+      <DependentUpon>frmListener.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmMain.resx">
       <DependentUpon>frmMain.cs</DependentUpon>
@@ -107,6 +132,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -137,6 +163,9 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\IPBuddyIcon.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

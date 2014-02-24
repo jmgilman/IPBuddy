@@ -15,13 +15,13 @@
         </StaticIP>
       </NAE>
       <NAE Name="NAE2">
-        <IPAddress></IPAddress>
-        <MAC></MAC>
-        <OSVersion></OSVersion>
-        <MSEAVersion></MSEAVersion>
+        <IPAddress>123.456.789.124</IPAddress>
+        <MAC>00:00:00:00:00:00</MAC>
+        <OSVersion>6.0.0.123</OSVersion>
+        <MSEAVersion>6.0.0.123</MSEAVersion>
         <NeuronID></NeuronID>
         <StaticIP>
-          <Address></Address>
+          <Address>123.456.789.1</Address>
           <SubnetMask></SubnetMask>
           <DefaultGateway></DefaultGateway>
         </StaticIP>

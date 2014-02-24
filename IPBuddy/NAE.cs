@@ -4,10 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
+using System.Diagnostics;
 
 namespace IPBuddy
 {
-    class NAE
+    public class NAE
     {
         public string Name = "";
         public string IPAddress = "";
@@ -17,6 +18,29 @@ namespace IPBuddy
         public string NeuronID = "";
 
         public StaticIP StaticIPAddress = new StaticIP();
+
+        private string protocol = "jcilaunchersmp://";
+
+        public void Launch()
+        {
+            int majorVer = Convert.ToInt32(this.MSEAVersion.Split(new char[] { '.' })[0]);
+
+            if (majorVer >= 6)
+            {
+                String uri = this.protocol + this.IPAddress;
+                ProcessStartInfo psi = new ProcessStartInfo();
+
+                psi.UseShellExecute = true;
+                psi.FileName = uri;
+
+                Process.Start(psi);
+            }
+            else
+            {
+                String uri = "http://" + this.IPAddress + "/metasys";
+                Process.Start("IExplore.exe", uri);
+            }
+        }
 
         public XElement ToXML()
         {

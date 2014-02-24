@@ -29,7 +29,12 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMain));
             this.treeSites = new System.Windows.Forms.TreeView();
+            this.contextTree = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.newSiteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.importSiteToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.pasteToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.groupAdapters = new System.Windows.Forms.GroupBox();
             this.label4 = new System.Windows.Forms.Label();
             this.lblAdapterDefaultGateway = new System.Windows.Forms.Label();
@@ -43,7 +48,7 @@
             this.btnSetStatic = new System.Windows.Forms.Button();
             this.btnSetDHCP = new System.Windows.Forms.Button();
             this.groupNAE = new System.Windows.Forms.GroupBox();
-            this.listNAE = new System.Windows.Forms.ListView();
+            this.dataNAE = new System.Windows.Forms.DataGridView();
             this.menuMain = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.newToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -55,33 +60,33 @@
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.nAETrackerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.importToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.importSiteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.importNAEToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.exportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.exportSiteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.exportNAEToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpTopicsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.contextSite = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.newNAEToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.importNAEToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.exportToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.copyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pasteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.contextNAE = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.launchToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.exportToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             this.copyToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.deleteToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.contextTree = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.newSiteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.pasteToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.notifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
+            this.contextNotify = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.exitToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolTipNotify = new System.Windows.Forms.ToolTip(this.components);
+            this.contextTree.SuspendLayout();
             this.groupAdapters.SuspendLayout();
             this.groupNAE.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataNAE)).BeginInit();
             this.menuMain.SuspendLayout();
             this.contextSite.SuspendLayout();
             this.contextNAE.SuspendLayout();
-            this.contextTree.SuspendLayout();
+            this.contextNotify.SuspendLayout();
             this.SuspendLayout();
             // 
             // treeSites
@@ -89,10 +94,42 @@
             this.treeSites.ContextMenuStrip = this.contextTree;
             this.treeSites.Location = new System.Drawing.Point(12, 30);
             this.treeSites.Name = "treeSites";
-            this.treeSites.Size = new System.Drawing.Size(121, 328);
+            this.treeSites.Size = new System.Drawing.Size(121, 382);
             this.treeSites.TabIndex = 0;
             this.treeSites.AfterLabelEdit += new System.Windows.Forms.NodeLabelEditEventHandler(this.treeSites_AfterLabelEdit);
+            this.treeSites.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeSites_AfterSelect);
+            this.treeSites.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.treeSites_NodeMouseClick);
             this.treeSites.DoubleClick += new System.EventHandler(this.treeSites_DoubleClick);
+            // 
+            // contextTree
+            // 
+            this.contextTree.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.newSiteToolStripMenuItem,
+            this.importSiteToolStripMenuItem1,
+            this.pasteToolStripMenuItem1});
+            this.contextTree.Name = "contextTree";
+            this.contextTree.Size = new System.Drawing.Size(133, 70);
+            // 
+            // newSiteToolStripMenuItem
+            // 
+            this.newSiteToolStripMenuItem.Name = "newSiteToolStripMenuItem";
+            this.newSiteToolStripMenuItem.Size = new System.Drawing.Size(132, 22);
+            this.newSiteToolStripMenuItem.Text = "New Site";
+            this.newSiteToolStripMenuItem.Click += new System.EventHandler(this.newSiteToolStripMenuItem_Click);
+            // 
+            // importSiteToolStripMenuItem1
+            // 
+            this.importSiteToolStripMenuItem1.Name = "importSiteToolStripMenuItem1";
+            this.importSiteToolStripMenuItem1.Size = new System.Drawing.Size(132, 22);
+            this.importSiteToolStripMenuItem1.Text = "Import Site";
+            this.importSiteToolStripMenuItem1.Click += new System.EventHandler(this.importSiteToolStripMenuItem1_Click);
+            // 
+            // pasteToolStripMenuItem1
+            // 
+            this.pasteToolStripMenuItem1.Name = "pasteToolStripMenuItem1";
+            this.pasteToolStripMenuItem1.Size = new System.Drawing.Size(132, 22);
+            this.pasteToolStripMenuItem1.Text = "Paste";
+            this.pasteToolStripMenuItem1.Click += new System.EventHandler(this.pasteToolStripMenuItem1_Click);
             // 
             // groupAdapters
             // 
@@ -106,7 +143,7 @@
             this.groupAdapters.Controls.Add(this.comboAdapterList);
             this.groupAdapters.Location = new System.Drawing.Point(142, 59);
             this.groupAdapters.Name = "groupAdapters";
-            this.groupAdapters.Size = new System.Drawing.Size(290, 145);
+            this.groupAdapters.Size = new System.Drawing.Size(303, 145);
             this.groupAdapters.TabIndex = 1;
             this.groupAdapters.TabStop = false;
             this.groupAdapters.Text = "Network Adapters";
@@ -149,23 +186,26 @@
             // 
             // txtAdapterDefaultGateway
             // 
+            this.txtAdapterDefaultGateway.Enabled = false;
             this.txtAdapterDefaultGateway.Location = new System.Drawing.Point(103, 113);
             this.txtAdapterDefaultGateway.Name = "txtAdapterDefaultGateway";
-            this.txtAdapterDefaultGateway.Size = new System.Drawing.Size(178, 20);
+            this.txtAdapterDefaultGateway.Size = new System.Drawing.Size(194, 20);
             this.txtAdapterDefaultGateway.TabIndex = 3;
             // 
             // txtAdapterSubnetMask
             // 
+            this.txtAdapterSubnetMask.Enabled = false;
             this.txtAdapterSubnetMask.Location = new System.Drawing.Point(103, 87);
             this.txtAdapterSubnetMask.Name = "txtAdapterSubnetMask";
-            this.txtAdapterSubnetMask.Size = new System.Drawing.Size(178, 20);
+            this.txtAdapterSubnetMask.Size = new System.Drawing.Size(194, 20);
             this.txtAdapterSubnetMask.TabIndex = 2;
             // 
             // txtAdapterIPAddress
             // 
+            this.txtAdapterIPAddress.Enabled = false;
             this.txtAdapterIPAddress.Location = new System.Drawing.Point(103, 61);
             this.txtAdapterIPAddress.Name = "txtAdapterIPAddress";
-            this.txtAdapterIPAddress.Size = new System.Drawing.Size(178, 20);
+            this.txtAdapterIPAddress.Size = new System.Drawing.Size(194, 20);
             this.txtAdapterIPAddress.TabIndex = 1;
             // 
             // comboAdapterList
@@ -173,13 +213,13 @@
             this.comboAdapterList.FormattingEnabled = true;
             this.comboAdapterList.Location = new System.Drawing.Point(65, 24);
             this.comboAdapterList.Name = "comboAdapterList";
-            this.comboAdapterList.Size = new System.Drawing.Size(216, 21);
+            this.comboAdapterList.Size = new System.Drawing.Size(232, 21);
             this.comboAdapterList.TabIndex = 0;
             this.comboAdapterList.SelectedIndexChanged += new System.EventHandler(this.comboAdapterList_SelectedIndexChanged);
             // 
             // btnLaunch
             // 
-            this.btnLaunch.Location = new System.Drawing.Point(151, 30);
+            this.btnLaunch.Location = new System.Drawing.Point(160, 30);
             this.btnLaunch.Name = "btnLaunch";
             this.btnLaunch.Size = new System.Drawing.Size(85, 23);
             this.btnLaunch.TabIndex = 2;
@@ -189,7 +229,7 @@
             // 
             // btnSetStatic
             // 
-            this.btnSetStatic.Location = new System.Drawing.Point(243, 30);
+            this.btnSetStatic.Location = new System.Drawing.Point(252, 30);
             this.btnSetStatic.Name = "btnSetStatic";
             this.btnSetStatic.Size = new System.Drawing.Size(85, 23);
             this.btnSetStatic.TabIndex = 3;
@@ -199,7 +239,7 @@
             // 
             // btnSetDHCP
             // 
-            this.btnSetDHCP.Location = new System.Drawing.Point(335, 30);
+            this.btnSetDHCP.Location = new System.Drawing.Point(344, 30);
             this.btnSetDHCP.Name = "btnSetDHCP";
             this.btnSetDHCP.Size = new System.Drawing.Size(85, 23);
             this.btnSetDHCP.TabIndex = 4;
@@ -209,33 +249,36 @@
             // 
             // groupNAE
             // 
-            this.groupNAE.Controls.Add(this.listNAE);
+            this.groupNAE.Controls.Add(this.dataNAE);
             this.groupNAE.Location = new System.Drawing.Point(142, 210);
             this.groupNAE.Name = "groupNAE";
-            this.groupNAE.Size = new System.Drawing.Size(290, 153);
+            this.groupNAE.Size = new System.Drawing.Size(303, 202);
             this.groupNAE.TabIndex = 5;
             this.groupNAE.TabStop = false;
             this.groupNAE.Text = "NAE";
             // 
-            // listNAE
+            // dataNAE
             // 
-            this.listNAE.Location = new System.Drawing.Point(6, 19);
-            this.listNAE.Name = "listNAE";
-            this.listNAE.Size = new System.Drawing.Size(278, 128);
-            this.listNAE.TabIndex = 0;
-            this.listNAE.UseCompatibleStateImageBehavior = false;
+            this.dataNAE.AllowUserToAddRows = false;
+            this.dataNAE.AllowUserToDeleteRows = false;
+            this.dataNAE.AllowUserToResizeRows = false;
+            this.dataNAE.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataNAE.Location = new System.Drawing.Point(11, 19);
+            this.dataNAE.Name = "dataNAE";
+            this.dataNAE.RowHeadersVisible = false;
+            this.dataNAE.Size = new System.Drawing.Size(286, 177);
+            this.dataNAE.TabIndex = 7;
+            this.dataNAE.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataNAE_CellEndEdit);
             // 
             // menuMain
             // 
             this.menuMain.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
             this.toolsToolStripMenuItem,
-            this.importToolStripMenuItem,
-            this.exportToolStripMenuItem,
             this.helpToolStripMenuItem});
             this.menuMain.Location = new System.Drawing.Point(0, 0);
             this.menuMain.Name = "menuMain";
-            this.menuMain.Size = new System.Drawing.Size(444, 24);
+            this.menuMain.Size = new System.Drawing.Size(457, 24);
             this.menuMain.TabIndex = 6;
             this.menuMain.Text = "menuStrip1";
             // 
@@ -320,52 +363,6 @@
             this.nAETrackerToolStripMenuItem.Text = "NAE Tracker";
             this.nAETrackerToolStripMenuItem.Click += new System.EventHandler(this.nAETrackerToolStripMenuItem_Click);
             // 
-            // importToolStripMenuItem
-            // 
-            this.importToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.importSiteToolStripMenuItem,
-            this.importNAEToolStripMenuItem});
-            this.importToolStripMenuItem.Name = "importToolStripMenuItem";
-            this.importToolStripMenuItem.Size = new System.Drawing.Size(55, 20);
-            this.importToolStripMenuItem.Text = "Import";
-            // 
-            // importSiteToolStripMenuItem
-            // 
-            this.importSiteToolStripMenuItem.Name = "importSiteToolStripMenuItem";
-            this.importSiteToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
-            this.importSiteToolStripMenuItem.Text = "Import Site";
-            this.importSiteToolStripMenuItem.Click += new System.EventHandler(this.importSiteToolStripMenuItem_Click);
-            // 
-            // importNAEToolStripMenuItem
-            // 
-            this.importNAEToolStripMenuItem.Name = "importNAEToolStripMenuItem";
-            this.importNAEToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
-            this.importNAEToolStripMenuItem.Text = "Import NAE";
-            this.importNAEToolStripMenuItem.Click += new System.EventHandler(this.importNAEToolStripMenuItem_Click);
-            // 
-            // exportToolStripMenuItem
-            // 
-            this.exportToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.exportSiteToolStripMenuItem,
-            this.exportNAEToolStripMenuItem});
-            this.exportToolStripMenuItem.Name = "exportToolStripMenuItem";
-            this.exportToolStripMenuItem.Size = new System.Drawing.Size(52, 20);
-            this.exportToolStripMenuItem.Text = "Export";
-            // 
-            // exportSiteToolStripMenuItem
-            // 
-            this.exportSiteToolStripMenuItem.Name = "exportSiteToolStripMenuItem";
-            this.exportSiteToolStripMenuItem.Size = new System.Drawing.Size(133, 22);
-            this.exportSiteToolStripMenuItem.Text = "Export Site";
-            this.exportSiteToolStripMenuItem.Click += new System.EventHandler(this.exportSiteToolStripMenuItem_Click);
-            // 
-            // exportNAEToolStripMenuItem
-            // 
-            this.exportNAEToolStripMenuItem.Name = "exportNAEToolStripMenuItem";
-            this.exportNAEToolStripMenuItem.Size = new System.Drawing.Size(133, 22);
-            this.exportNAEToolStripMenuItem.Text = "Export NAE";
-            this.exportNAEToolStripMenuItem.Click += new System.EventHandler(this.exportNAEToolStripMenuItem_Click);
-            // 
             // helpToolStripMenuItem
             // 
             this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -394,37 +391,53 @@
             // 
             this.contextSite.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.newNAEToolStripMenuItem,
+            this.importNAEToolStripMenuItem1,
+            this.exportToolStripMenuItem1,
             this.copyToolStripMenuItem,
             this.pasteToolStripMenuItem,
             this.deleteToolStripMenuItem});
             this.contextSite.Name = "contextSite";
-            this.contextSite.Size = new System.Drawing.Size(125, 92);
+            this.contextSite.Size = new System.Drawing.Size(137, 136);
             // 
             // newNAEToolStripMenuItem
             // 
             this.newNAEToolStripMenuItem.Name = "newNAEToolStripMenuItem";
-            this.newNAEToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
+            this.newNAEToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
             this.newNAEToolStripMenuItem.Text = "New NAE";
             this.newNAEToolStripMenuItem.Click += new System.EventHandler(this.newNAEToolStripMenuItem_Click);
+            // 
+            // importNAEToolStripMenuItem1
+            // 
+            this.importNAEToolStripMenuItem1.Name = "importNAEToolStripMenuItem1";
+            this.importNAEToolStripMenuItem1.Size = new System.Drawing.Size(136, 22);
+            this.importNAEToolStripMenuItem1.Text = "Import NAE";
+            this.importNAEToolStripMenuItem1.Click += new System.EventHandler(this.importNAEToolStripMenuItem1_Click);
+            // 
+            // exportToolStripMenuItem1
+            // 
+            this.exportToolStripMenuItem1.Name = "exportToolStripMenuItem1";
+            this.exportToolStripMenuItem1.Size = new System.Drawing.Size(136, 22);
+            this.exportToolStripMenuItem1.Text = "Export";
+            this.exportToolStripMenuItem1.Click += new System.EventHandler(this.exportToolStripMenuItem1_Click);
             // 
             // copyToolStripMenuItem
             // 
             this.copyToolStripMenuItem.Name = "copyToolStripMenuItem";
-            this.copyToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
+            this.copyToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
             this.copyToolStripMenuItem.Text = "Copy";
             this.copyToolStripMenuItem.Click += new System.EventHandler(this.copyToolStripMenuItem_Click);
             // 
             // pasteToolStripMenuItem
             // 
             this.pasteToolStripMenuItem.Name = "pasteToolStripMenuItem";
-            this.pasteToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
+            this.pasteToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
             this.pasteToolStripMenuItem.Text = "Paste";
             this.pasteToolStripMenuItem.Click += new System.EventHandler(this.pasteToolStripMenuItem_Click);
             // 
             // deleteToolStripMenuItem
             // 
             this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
-            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
+            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
             this.deleteToolStripMenuItem.Text = "Delete";
             this.deleteToolStripMenuItem.Click += new System.EventHandler(this.deleteToolStripMenuItem_Click);
             // 
@@ -432,10 +445,11 @@
             // 
             this.contextNAE.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.launchToolStripMenuItem,
+            this.exportToolStripMenuItem2,
             this.copyToolStripMenuItem1,
             this.deleteToolStripMenuItem1});
             this.contextNAE.Name = "contextNAE";
-            this.contextNAE.Size = new System.Drawing.Size(114, 70);
+            this.contextNAE.Size = new System.Drawing.Size(114, 92);
             // 
             // launchToolStripMenuItem
             // 
@@ -443,6 +457,13 @@
             this.launchToolStripMenuItem.Size = new System.Drawing.Size(113, 22);
             this.launchToolStripMenuItem.Text = "Launch";
             this.launchToolStripMenuItem.Click += new System.EventHandler(this.launchToolStripMenuItem_Click);
+            // 
+            // exportToolStripMenuItem2
+            // 
+            this.exportToolStripMenuItem2.Name = "exportToolStripMenuItem2";
+            this.exportToolStripMenuItem2.Size = new System.Drawing.Size(113, 22);
+            this.exportToolStripMenuItem2.Text = "Export";
+            this.exportToolStripMenuItem2.Click += new System.EventHandler(this.exportToolStripMenuItem2_Click);
             // 
             // copyToolStripMenuItem1
             // 
@@ -458,33 +479,38 @@
             this.deleteToolStripMenuItem1.Text = "Delete";
             this.deleteToolStripMenuItem1.Click += new System.EventHandler(this.deleteToolStripMenuItem1_Click);
             // 
-            // contextTree
+            // notifyIcon
             // 
-            this.contextTree.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.newSiteToolStripMenuItem,
-            this.pasteToolStripMenuItem1});
-            this.contextTree.Name = "contextTree";
-            this.contextTree.Size = new System.Drawing.Size(121, 48);
+            this.notifyIcon.BalloonTipText = "IPBuddy has been placed in the system tray.";
+            this.notifyIcon.BalloonTipTitle = "IPBuddy";
+            this.notifyIcon.ContextMenuStrip = this.contextNotify;
+            this.notifyIcon.Icon = ((System.Drawing.Icon)(resources.GetObject("notifyIcon.Icon")));
+            this.notifyIcon.Text = "IPBuddy V2.0";
+            this.notifyIcon.MouseClick += new System.Windows.Forms.MouseEventHandler(this.notifyIcon_MouseClick);
             // 
-            // newSiteToolStripMenuItem
+            // contextNotify
             // 
-            this.newSiteToolStripMenuItem.Name = "newSiteToolStripMenuItem";
-            this.newSiteToolStripMenuItem.Size = new System.Drawing.Size(120, 22);
-            this.newSiteToolStripMenuItem.Text = "New Site";
-            this.newSiteToolStripMenuItem.Click += new System.EventHandler(this.newSiteToolStripMenuItem_Click);
+            this.contextNotify.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.exitToolStripMenuItem1});
+            this.contextNotify.Name = "contextNotify";
+            this.contextNotify.Size = new System.Drawing.Size(93, 26);
             // 
-            // pasteToolStripMenuItem1
+            // exitToolStripMenuItem1
             // 
-            this.pasteToolStripMenuItem1.Name = "pasteToolStripMenuItem1";
-            this.pasteToolStripMenuItem1.Size = new System.Drawing.Size(120, 22);
-            this.pasteToolStripMenuItem1.Text = "Paste";
-            this.pasteToolStripMenuItem1.Click += new System.EventHandler(this.pasteToolStripMenuItem1_Click);
+            this.exitToolStripMenuItem1.Name = "exitToolStripMenuItem1";
+            this.exitToolStripMenuItem1.Size = new System.Drawing.Size(92, 22);
+            this.exitToolStripMenuItem1.Text = "Exit";
+            this.exitToolStripMenuItem1.Click += new System.EventHandler(this.exitToolStripMenuItem1_Click);
+            // 
+            // toolTipNotify
+            // 
+            this.toolTipNotify.IsBalloon = true;
             // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(444, 367);
+            this.ClientSize = new System.Drawing.Size(457, 424);
             this.Controls.Add(this.groupNAE);
             this.Controls.Add(this.btnSetDHCP);
             this.Controls.Add(this.btnSetStatic);
@@ -492,17 +518,22 @@
             this.Controls.Add(this.groupAdapters);
             this.Controls.Add(this.treeSites);
             this.Controls.Add(this.menuMain);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuMain;
             this.Name = "frmMain";
             this.Text = "IPBuddy - V2.0.0";
+            this.Resize += new System.EventHandler(this.frmMain_Resize);
+            this.contextTree.ResumeLayout(false);
             this.groupAdapters.ResumeLayout(false);
             this.groupAdapters.PerformLayout();
             this.groupNAE.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dataNAE)).EndInit();
             this.menuMain.ResumeLayout(false);
             this.menuMain.PerformLayout();
             this.contextSite.ResumeLayout(false);
             this.contextNAE.ResumeLayout(false);
-            this.contextTree.ResumeLayout(false);
+            this.contextNotify.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -510,7 +541,6 @@
 
         #endregion
 
-        private System.Windows.Forms.TreeView treeSites;
         private System.Windows.Forms.GroupBox groupAdapters;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label lblAdapterDefaultGateway;
@@ -524,7 +554,6 @@
         private System.Windows.Forms.Button btnSetStatic;
         private System.Windows.Forms.Button btnSetDHCP;
         private System.Windows.Forms.GroupBox groupNAE;
-        private System.Windows.Forms.ListView listNAE;
         private System.Windows.Forms.MenuStrip menuMain;
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem toolsToolStripMenuItem;
@@ -537,12 +566,6 @@
         private System.Windows.Forms.ToolStripMenuItem saveAsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem nAETrackerToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem importToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem importSiteToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem importNAEToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem exportToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem exportSiteToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem exportNAEToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem helpTopicsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
         private System.Windows.Forms.ContextMenuStrip contextSite;
@@ -560,6 +583,16 @@
         private System.Windows.Forms.ContextMenuStrip contextTree;
         private System.Windows.Forms.ToolStripMenuItem pasteToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem newSiteToolStripMenuItem;
+        private System.Windows.Forms.DataGridView dataNAE;
+        public System.Windows.Forms.TreeView treeSites;
+        private System.Windows.Forms.ToolStripMenuItem exportToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem exportToolStripMenuItem2;
+        private System.Windows.Forms.ToolStripMenuItem importNAEToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem importSiteToolStripMenuItem1;
+        private System.Windows.Forms.ContextMenuStrip contextNotify;
+        private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem1;
+        public System.Windows.Forms.NotifyIcon notifyIcon;
+        private System.Windows.Forms.ToolTip toolTipNotify;
 
     }
 }
