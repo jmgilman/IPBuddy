@@ -359,8 +359,8 @@
             // nAETrackerToolStripMenuItem
             // 
             this.nAETrackerToolStripMenuItem.Name = "nAETrackerToolStripMenuItem";
-            this.nAETrackerToolStripMenuItem.Size = new System.Drawing.Size(139, 22);
-            this.nAETrackerToolStripMenuItem.Text = "NAE Tracker";
+            this.nAETrackerToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.nAETrackerToolStripMenuItem.Text = "NAE Listener";
             this.nAETrackerToolStripMenuItem.Click += new System.EventHandler(this.nAETrackerToolStripMenuItem_Click);
             // 
             // helpToolStripMenuItem
