@@ -84,3 +84,8 @@ C:\Users\josh\Documents\GitHub\IPBuddy\IPBuddy\bin\Debug\IPBuddy.exe.manifest
 C:\Users\josh\Documents\GitHub\IPBuddy\IPBuddy\bin\Debug\IPBuddy.application
 C:\Users\josh\Documents\GitHub\IPBuddy\IPBuddy\obj\Debug\IPBuddy.exe.manifest
 C:\Users\josh\Documents\GitHub\IPBuddy\IPBuddy\obj\Debug\IPBuddy.application
+C:\Users\cgilmajo\Documents\GitHub\IPBuddy\IPBuddy\bin\Debug\Resources\IPBuddy.chm
+C:\Users\cgilmajo\Documents\GitHub\IPBuddy\IPBuddy\bin\Debug\IPBuddy.exe.manifest
+C:\Users\cgilmajo\Documents\GitHub\IPBuddy\IPBuddy\bin\Debug\IPBuddy.application
+C:\Users\cgilmajo\Documents\GitHub\IPBuddy\IPBuddy\obj\Debug\IPBuddy.exe.manifest
+C:\Users\cgilmajo\Documents\GitHub\IPBuddy\IPBuddy\obj\Debug\IPBuddy.application

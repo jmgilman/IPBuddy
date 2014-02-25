@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
+using System.Text.RegularExpressions;
 
 namespace IPBuddy
 {
@@ -40,21 +41,24 @@ namespace IPBuddy
             return ip;
         }
 
-        public static bool IsIPv4(string value)
+        public static bool IsIPv4(string ip)
         {
-            var quads = value.Split('.');
-            if (!(quads.Length == 4)) return false;
-
-            foreach (var quad in quads)
+            System.Net.IPAddress address;
+            if (System.Net.IPAddress.TryParse(ip, out address))
             {
-                int q;
-                if (!Int32.TryParse(quad, out q)
-                    || !q.ToString().Length.Equals(quad.Length)
-                    || q < 0
-                    || q > 255) { return false; }
+                if (address.ToString().CompareTo(ip) == 0)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
             }
-
-            return true;
+            else
+            {
+                return false;
+            }
         }
 
     }

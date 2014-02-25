@@ -359,7 +359,7 @@
             // nAETrackerToolStripMenuItem
             // 
             this.nAETrackerToolStripMenuItem.Name = "nAETrackerToolStripMenuItem";
-            this.nAETrackerToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.nAETrackerToolStripMenuItem.Size = new System.Drawing.Size(141, 22);
             this.nAETrackerToolStripMenuItem.Text = "NAE Listener";
             this.nAETrackerToolStripMenuItem.Click += new System.EventHandler(this.nAETrackerToolStripMenuItem_Click);
             // 
@@ -522,7 +522,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuMain;
             this.Name = "frmMain";
-            this.Text = "IPBuddy - V2.0.0";
+            this.Text = "IPBuddy - V2.0.3";
             this.Resize += new System.EventHandler(this.frmMain_Resize);
             this.contextTree.ResumeLayout(false);
             this.groupAdapters.ResumeLayout(false);

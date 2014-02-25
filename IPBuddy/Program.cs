@@ -14,9 +14,22 @@ namespace IPBuddy
         [STAThread]
         static void Main()
         {
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new frmMain());
+            Logger.Initialize();
+
+            try
+            {
+                Logger.WriteMessage("Application initialized.");
+
+                Application.EnableVisualStyles();
+                Application.SetCompatibleTextRenderingDefault(false);
+                Application.Run(new frmMain());
+            }
+            catch (Exception e)
+            {
+                Logger.WriteMessage("Exception caught in Main thread");
+                Logger.WriteException(e);
+                Logger.PromptLogReview();
+            }
         }
     }
 }

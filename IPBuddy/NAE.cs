@@ -23,7 +23,11 @@ namespace IPBuddy
 
         public void Launch()
         {
-            int majorVer = Convert.ToInt32(this.MSEAVersion.Split(new char[] { '.' })[0]);
+            int majorVer = 0;
+            if (!String.IsNullOrEmpty(this.MSEAVersion))
+            {
+                majorVer = Convert.ToInt32(this.MSEAVersion.Split(new char[] { '.' })[0]);
+            }
 
             if (majorVer >= 6)
             {

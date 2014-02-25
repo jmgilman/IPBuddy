@@ -16,6 +16,7 @@ namespace IPBuddy
     {
         public frmMain()
         {
+            Logger.WriteMessage("Form initializing.");
             InitializeComponent();
 
             /** Setup grid view **/
@@ -34,24 +35,49 @@ namespace IPBuddy
             /** Check for existing configuration and load if applicable **/
             if (System.IO.File.Exists("default.xml"))
             {
-                FormHandler.XMLToTree(XDocument.Load("default.xml"), this.treeSites);
-                this.treeSites.ExpandAll();
+                try
+                {
+                    FormHandler.XMLToTree(XDocument.Load("default.xml"), this.treeSites);
+                    this.treeSites.ExpandAll();
+                }
+                catch (Exception e)
+                {
+                    Logger.WriteMessage("Error in loading default save file.");
+                    Logger.WriteException(e);
+                    Logger.PromptLogReview("An error occurred trying to load your previously saved configuration.");
+                }
             }
 
             /** Start listening for packets **/
-            IList<LivePacketDevice> allDevices = LivePacketDevice.AllLocalMachine;
-            if (allDevices.Count > 0)
+            try
             {
-                foreach (LivePacketDevice device in allDevices)
+                IList<LivePacketDevice> allDevices = LivePacketDevice.AllLocalMachine;
+                if (allDevices.Count > 0)
                 {
-                    NAEListener listener = new NAEListener(device);
-                    Task.Run((Action)listener.listen);
+                    foreach (LivePacketDevice device in allDevices)
+                    {
+                        NAEListener listener = new NAEListener(device);
+                        Task.Run((Action)listener.listen);
+                    }
                 }
+                else
+                {
+                    MessageBox.Show("No network adapters were detected for listening and the NAE Listener will not function properly. Please ensure you have WinPCap installed.");
+                }
+            }
+            catch (Exception e)
+            {
+                Logger.WriteMessage("Error in starting packet listeners");
+                Logger.WriteException(e);
+                Logger.PromptLogReview("An error occurred in starting the listener devices.");
+                MessageBox.Show("Please note that since the listener devices failed to start, the NAE Listener tool will not function.");
             }
 
             /** Setup the NAE Handler **/
             NAEHandler.mainFrm = this;
             NAEHandler.Initialize();
+
+            Logger.WriteMessage("Form initialized.");
         }
 
         private void frmMain_Resize(object sender, EventArgs e)
@@ -99,15 +125,33 @@ namespace IPBuddy
 
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
-                this.treeSites.Nodes.Clear();
-                FormHandler.XMLToTree(XDocument.Load(openFileDialog.FileName), this.treeSites);
+                try
+                {
+                    this.treeSites.Nodes.Clear();
+                    FormHandler.XMLToTree(XDocument.Load(openFileDialog.FileName), this.treeSites);
+                }
+                catch (Exception ex)
+                {
+                    Logger.WriteMessage("Failed to load XML file: " + openFileDialog.FileName);
+                    Logger.WriteException(ex);
+                    Logger.PromptLogReview("An error occurred in loading the file, it may be corrupted.");
+                }
             }
         }
 
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            XDocument document = FormHandler.TreeToXML(this.treeSites);
-            document.Save("default.xml");
+            try
+            {
+                XDocument document = FormHandler.TreeToXML(this.treeSites);
+                document.Save("default.xml");
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteMessage("Failed to save XML file to default path.");
+                Logger.WriteException(ex);
+                Logger.PromptLogReview("An error occurred in saving the file, you may not have appropriate permissions.");
+            }
         }
 
         private void saveAsToolStripMenuItem_Click(object sender, EventArgs e)
@@ -120,8 +164,17 @@ namespace IPBuddy
 
             if (saveFileDialog.ShowDialog() == DialogResult.OK)
             {
-                XDocument document = FormHandler.TreeToXML(this.treeSites);
-                document.Save(saveFileDialog.FileName);
+                try
+                {
+                    XDocument document = FormHandler.TreeToXML(this.treeSites);
+                    document.Save(saveFileDialog.FileName);
+                }
+                catch (Exception ex)
+                {
+                    Logger.WriteMessage("Failed to save XML file: " + saveFileDialog.FileName);
+                    Logger.WriteException(ex);
+                    Logger.PromptLogReview("An error occurred in saving the file, you may not have appropriate permissions.");
+                }
             }
         }
 
@@ -137,7 +190,16 @@ namespace IPBuddy
 
         private void helpTopicsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            System.Windows.Forms.Help.ShowHelp(this, "IPBuddy.chm");
+            try
+            {
+                System.Windows.Forms.Help.ShowHelp(this, "Resources/IPBuddy.chm");
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteMessage("Error in loading the help file.");
+                Logger.WriteException(ex);
+                Logger.PromptLogReview("There was an error opening the help file.");
+            }
         }
 
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
@@ -156,8 +218,24 @@ namespace IPBuddy
 
             if (this.treeSites.SelectedNode.Tag is NAE)
             {
-                NAE nae = (NAE)this.treeSites.SelectedNode.Tag;
-                nae.Launch();
+                try
+                {
+                    NAE nae = (NAE)this.treeSites.SelectedNode.Tag;
+
+                    if (!StaticIP.IsIPv4(nae.IPAddress))
+                    {
+                        MessageBox.Show("Please enter a valid IP address for the NAE.");
+                        return;
+                    }
+
+                    nae.Launch();
+                }
+                catch (Exception ex)
+                {
+                    Logger.WriteMessage("Error in launching NAE.");
+                    Logger.WriteException(ex);
+                    Logger.PromptLogReview("There was an error launching the NAE.");
+                }
             }
             else
             {
@@ -180,27 +258,51 @@ namespace IPBuddy
                 return;
             }
 
-            NAE nae = (NAE)this.treeSites.SelectedNode.Tag;
-            NIC nic = (NIC)this.comboAdapterList.SelectedItem;
+            try
+            {
+                NAE nae = (NAE)this.treeSites.SelectedNode.Tag;
+                NIC nic = (NIC)this.comboAdapterList.SelectedItem;
 
-            nic.SetStaticIP(nae.StaticIPAddress.Address, nae.StaticIPAddress.SubnetMask, nae.StaticIPAddress.DefaultGateway);
-            NIC.LoadNICs(this.comboAdapterList);
-            nic.ReselectNIC(this.comboAdapterList);
+                if (!StaticIP.IsIPv4(nae.StaticIPAddress.Address) || !StaticIP.IsIPv4(nae.StaticIPAddress.SubnetMask) || !StaticIP.IsIPv4(nae.StaticIPAddress.DefaultGateway))
+                {
+                    MessageBox.Show("Please enter valid IP addresses for the NAE's static IP address, subnet mask, and gateway.");
+                    return;
+                }
 
-            nic = (NIC)this.comboAdapterList.SelectedItem;
-            FormHandler.UpdateNICText(nic, this.txtAdapterIPAddress, this.txtAdapterSubnetMask, this.txtAdapterDefaultGateway);
+                nic.SetStaticIP(nae.StaticIPAddress.Address, nae.StaticIPAddress.SubnetMask, nae.StaticIPAddress.DefaultGateway);
+                NIC.LoadNICs(this.comboAdapterList);
+                nic.ReselectNIC(this.comboAdapterList);
+
+                nic = (NIC)this.comboAdapterList.SelectedItem;
+                FormHandler.UpdateNICText(nic, this.txtAdapterIPAddress, this.txtAdapterSubnetMask, this.txtAdapterDefaultGateway);
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteMessage("Error in setting the static IP address.");
+                Logger.WriteException(ex);
+                Logger.PromptLogReview("There was an error in setting the static IP address.");
+            }
         }
 
         private void btnSetDHCP_Click(object sender, EventArgs e)
         {
-            NIC nic = (NIC)this.comboAdapterList.SelectedItem;
+            try
+            {
+                NIC nic = (NIC)this.comboAdapterList.SelectedItem;
 
-            nic.SetDHCP();
-            NIC.LoadNICs(this.comboAdapterList);
-            nic.ReselectNIC(this.comboAdapterList);
+                nic.SetDHCP();
+                NIC.LoadNICs(this.comboAdapterList);
+                nic.ReselectNIC(this.comboAdapterList);
 
-            nic = (NIC)this.comboAdapterList.SelectedItem;
-            FormHandler.UpdateNICText(nic, this.txtAdapterIPAddress, this.txtAdapterSubnetMask, this.txtAdapterDefaultGateway);
+                nic = (NIC)this.comboAdapterList.SelectedItem;
+                FormHandler.UpdateNICText(nic, this.txtAdapterIPAddress, this.txtAdapterSubnetMask, this.txtAdapterDefaultGateway);
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteMessage("Error in setting DHCP.");
+                Logger.WriteException(ex);
+                Logger.PromptLogReview("There was an error in setting DHCP.");
+            }
         }
 
         private void treeSites_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
@@ -264,9 +366,7 @@ namespace IPBuddy
 
         private void newNAEToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ContextMenuStrip cms = (ContextMenuStrip)((ToolStripMenuItem)sender).Owner;
-            TreeNode node = this.treeSites.GetNodeAt(this.treeSites.PointToClient(cms.Location));
-
+            TreeNode node = this.treeSites.SelectedNode;
             FormHandler.AddNewNAEToTree(this.treeSites, node);
         }
 
@@ -280,8 +380,17 @@ namespace IPBuddy
 
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
-                XElement xnae = XDocument.Load(openFileDialog.FileName).Root;
-                FormHandler.AddNAEToTree(this.treeSites.SelectedNode.Nodes, NAE.FromXML(xnae));
+                try
+                {
+                    XElement xnae = XDocument.Load(openFileDialog.FileName).Root;
+                    FormHandler.AddNAEToTree(this.treeSites.SelectedNode.Nodes, NAE.FromXML(xnae));
+                }
+                catch (Exception ex)
+                {
+                    Logger.WriteMessage("Failed to load XML file: " + openFileDialog.FileName);
+                    Logger.WriteException(ex);
+                    Logger.PromptLogReview("An error occurred in loading the file, it may be corrupted.");
+                }
             }
         }
 
@@ -297,15 +406,23 @@ namespace IPBuddy
 
             if (saveFileDialog.ShowDialog() == DialogResult.OK)
             {
-                XDocument document = new XDocument(site.ToXML());
-                document.Save(saveFileDialog.FileName);
+                try
+                {
+                    XDocument document = new XDocument(site.ToXML());
+                    document.Save(saveFileDialog.FileName);
+                }
+                catch (Exception ex)
+                {
+                    Logger.WriteMessage("Failed to save XML file: " + saveFileDialog.FileName);
+                    Logger.WriteException(ex);
+                    Logger.PromptLogReview("An error occurred in saving the file, you may not have appropriate permissions.");
+                }
             }
         }
 
         private void copyToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ContextMenuStrip cms = (ContextMenuStrip)((ToolStripMenuItem)sender).Owner;
-            TreeNode node = this.treeSites.GetNodeAt(this.treeSites.PointToClient(cms.Location));
+            TreeNode node = this.treeSites.SelectedNode;
             Site site = (Site)node.Tag;
 
             Clipboard.SetText(site.ToXML().ToString());
@@ -317,9 +434,18 @@ namespace IPBuddy
             {
                 if (!String.IsNullOrEmpty(Clipboard.GetText()))
                 {
-                    TreeNodeCollection nodes = this.treeSites.SelectedNode.Nodes;
-                    XElement xnae = XElement.Parse(Clipboard.GetText());
-                    FormHandler.AddNAEToTree(nodes, NAE.FromXML(xnae));
+                    try
+                    {
+                        TreeNodeCollection nodes = this.treeSites.SelectedNode.Nodes;
+                        XElement xnae = XElement.Parse(Clipboard.GetText());
+                        FormHandler.AddNAEToTree(nodes, NAE.FromXML(xnae));
+                    }
+                    catch (Exception ex)
+                    {
+                        Logger.WriteMessage("Error in pasting NAE.");
+                        Logger.WriteException(ex);
+                        Logger.PromptLogReview("Failed to paste the NAE, the data in the clipboard may be corrupt.");
+                    }
                 }
             }
         }
@@ -331,8 +457,17 @@ namespace IPBuddy
 
         private void launchToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            NAE nae = (NAE)this.treeSites.SelectedNode.Tag;
-            nae.Launch();
+            try
+            {
+                NAE nae = (NAE)this.treeSites.SelectedNode.Tag;
+                nae.Launch();
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteMessage("Failed to launch NAE.");
+                Logger.WriteException(ex);
+                Logger.PromptLogReview("Failed to launch NAE.");
+            }
         }
 
         private void exportToolStripMenuItem2_Click(object sender, EventArgs e)
@@ -347,15 +482,23 @@ namespace IPBuddy
 
             if (saveFileDialog.ShowDialog() == DialogResult.OK)
             {
-                XDocument document = new XDocument(nae.ToXML());
-                document.Save(saveFileDialog.FileName);
+                try
+                {
+                    XDocument document = new XDocument(nae.ToXML());
+                    document.Save(saveFileDialog.FileName);
+                }
+                catch (Exception ex)
+                {
+                    Logger.WriteMessage("Failed to save XML file: " + saveFileDialog.FileName);
+                    Logger.WriteException(ex);
+                    Logger.PromptLogReview("An error occurred in saving the file, you may not have appropriate permissions.");
+                }
             }
         }
 
         private void copyToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            ContextMenuStrip cms = (ContextMenuStrip)((ToolStripMenuItem)sender).Owner;
-            TreeNode node = this.treeSites.GetNodeAt(this.treeSites.PointToClient(cms.Location));
+            TreeNode node = this.treeSites.SelectedNode;
             NAE nae = (NAE)node.Tag;
 
             Clipboard.SetText(nae.ToXML().ToString());
@@ -385,8 +528,17 @@ namespace IPBuddy
 
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
-                XElement xsite = XDocument.Load(openFileDialog.FileName).Root;
-                FormHandler.AddSiteToTree(this.treeSites.Nodes, IPBuddy.Site.FromXML(xsite));
+                try
+                {
+                    XElement xsite = XDocument.Load(openFileDialog.FileName).Root;
+                    FormHandler.AddSiteToTree(this.treeSites.Nodes, IPBuddy.Site.FromXML(xsite));
+                }
+                catch (Exception ex)
+                {
+                    Logger.WriteMessage("Failed to load XML file: " + openFileDialog.FileName);
+                    Logger.WriteException(ex);
+                    Logger.PromptLogReview("An error occurred in loading the file, it may be corrupted.");
+                }
             }
         }
 
@@ -394,8 +546,17 @@ namespace IPBuddy
         {
             if (!String.IsNullOrEmpty(Clipboard.GetText()))
             {
-                XElement xsite = XElement.Parse(Clipboard.GetText());
-                FormHandler.AddSiteToTree(this.treeSites.Nodes, IPBuddy.Site.FromXML(xsite));
+                try
+                {
+                    XElement xsite = XElement.Parse(Clipboard.GetText());
+                    FormHandler.AddSiteToTree(this.treeSites.Nodes, IPBuddy.Site.FromXML(xsite));
+                }
+                catch (Exception ex)
+                {
+                    Logger.WriteMessage("Error in pasting site.");
+                    Logger.WriteException(ex);
+                    Logger.PromptLogReview("Failed to paste the site, the data in the clipboard may be corrupt.");
+                }
             }
         }
 
