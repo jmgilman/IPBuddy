@@ -10,6 +10,8 @@ namespace IPBuddy
 {
     class FormHandler
     {
+        public static string savePath = "default.xml";
+
         public static void AddNewSiteToTree(TreeView tree)
         {
             Site site = new Site{Name = "Site Name"};

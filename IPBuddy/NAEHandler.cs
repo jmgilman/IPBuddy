@@ -16,12 +16,16 @@ namespace IPBuddy
         public static int BroadcastPort = 0x26b6;
 
         public static frmListener listenFrm = new frmListener();
+        public static frmImportSingle importFrm = new frmImportSingle();
         public static frmMain mainFrm;
+
+        public static bool ListeningForNAE = false;
+        public static String ListeningForNAEIP = "";
 
         public static void Initialize()
         {
-            NAEHandler.listenFrm = new frmListener();
             NAEHandler.listenFrm.mainFrm = NAEHandler.mainFrm;
+            NAEHandler.importFrm.mainFrm = NAEHandler.mainFrm;
         }
         public static void Broadcast()
         {
@@ -36,9 +40,25 @@ namespace IPBuddy
             client.Close();
         }
 
+        public static void BroadcastToNAE(String ip)
+        {
+            byte[] bytes = new byte[NAEHandler.BroadcastMessage.Length + 2];
+            Encoding.ASCII.GetBytes(NAEHandler.BroadcastMessage, 0, NAEHandler.BroadcastMessage.Length, bytes, 0);
+            BitConverter.GetBytes((ushort)0).CopyTo(bytes, NAEHandler.BroadcastMessage.Length);
+
+            NAEHandler.ListeningForNAE = true;
+            NAEHandler.ListeningForNAEIP = ip;
+
+            System.Net.Sockets.UdpClient client = new System.Net.Sockets.UdpClient();
+            System.Net.IPEndPoint groupEP = new System.Net.IPEndPoint(System.Net.IPAddress.Parse(ip), NAEHandler.BroadcastPort);
+
+            client.Send(bytes, bytes.Length, groupEP);
+            client.Close();
+        }
+
         public static void PacketHandler(Packet packet)
         {
-            Console.WriteLine(packet.Timestamp.ToString("yyyy-MM-dd hh:mm:ss.fff") + " Length: " + packet.Length);
+            Logger.WriteMessage("Received packet at " + packet.Timestamp.ToString("yyyy-MM-dd hh:mm:ss.fff") + " with length " + packet.Length);
 
             IpV4Datagram ip = packet.Ethernet.IpV4;
             UdpDatagram udp = ip.Udp;
@@ -47,6 +67,12 @@ namespace IPBuddy
             byte[] data = payload.ToArray();
             NAE nae = NAEHandler.parseNAEFromPacket(data);
             String msg = nae.Name + " reported online.";
+
+            if (NAEHandler.ListeningForNAE && NAEHandler.ListeningForNAEIP.Equals(nae.IPAddress))
+            {
+                NAEHandler.importFrm.Invoke(NAEHandler.importFrm.PopulateNAEDelegate, new object[] { nae });
+                return;
+            }
 
             NAEHandler.listenFrm.Invoke(NAEHandler.listenFrm.AddNAEDelegate, new object[] { nae });
 

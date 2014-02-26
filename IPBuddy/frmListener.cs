@@ -68,8 +68,24 @@ namespace IPBuddy
 
         private void button2_Click(object sender, EventArgs e)
         {
-            NAE nae = (NAE)this.listDevices.SelectedItems[0].Tag;
-            nae.StaticIPAddress = this.generateStatic(nae.IPAddress);
+            if (this.listDevices.SelectedItems.Count <= 0)
+            {
+                MessageBox.Show("Please select at least one NAE to import.");
+            }
+            else if (Sites.FromTreeView(this.mainFrm.treeSites).Count <= 0)
+            {
+                MessageBox.Show("You have no sites to import to. Please create at least one site first.");
+            }
+
+            List<NAE> naes = new List<NAE>();
+            foreach(ListViewItem item in this.listDevices.SelectedItems)
+            {
+                NAE nae = (NAE)item.Tag;
+                nae.StaticIPAddress = StaticIP.GenerateStatic(nae.IPAddress);
+
+                naes.Add(nae);
+            }
+
             frmImport frm = new frmImport();
             
             foreach(Site site in Sites.FromTreeView(this.mainFrm.treeSites))
@@ -86,8 +102,11 @@ namespace IPBuddy
                     Site site = (Site)node.Tag;
                     if (selectedSite.Equals(site.Name))
                     {
-                        site.NAEs.Add(nae);
-                        FormHandler.AddNAEToTree(node.Nodes, nae);
+                        foreach(NAE nae in naes)
+                        {
+                            site.NAEs.Add(nae);
+                            FormHandler.AddNAEToTree(node.Nodes, nae);
+                        }
                     }
                 }
             }

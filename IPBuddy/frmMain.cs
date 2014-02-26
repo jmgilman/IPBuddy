@@ -9,11 +9,14 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml.Linq;
 using PcapDotNet.Core;
+using System.Diagnostics;
 
 namespace IPBuddy
 {
     public partial class frmMain : Form
     {
+        private String title = "IPBuddy V2.1.0";
+
         public frmMain()
         {
             Logger.WriteMessage("Form initializing.");
@@ -39,6 +42,7 @@ namespace IPBuddy
                 {
                     FormHandler.XMLToTree(XDocument.Load("default.xml"), this.treeSites);
                     this.treeSites.ExpandAll();
+                    this.Text = this.title + " - default.xml"; 
                 }
                 catch (Exception e)
                 {
@@ -97,6 +101,22 @@ namespace IPBuddy
             }
         }
 
+        private void frmMain_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (System.IO.File.Exists(FormHandler.savePath))
+            {
+                XDocument current = FormHandler.TreeToXML(this.treeSites);
+                if (!XDocument.Load(FormHandler.savePath).ToString().Equals(current.ToString()))
+                {
+                    DialogResult dialogResult = MessageBox.Show("You have unsaved changes. Would you like to save them before closing?", "Attention", MessageBoxButtons.YesNo);
+                    if (dialogResult == DialogResult.Yes)
+                    {
+                        current.Save(FormHandler.savePath);
+                    }
+                }
+            }
+        }
+
         private void siteToolStripMenuItem_Click(object sender, EventArgs e)
         {
             FormHandler.AddNewSiteToTree(this.treeSites);
@@ -129,6 +149,7 @@ namespace IPBuddy
                 {
                     this.treeSites.Nodes.Clear();
                     FormHandler.XMLToTree(XDocument.Load(openFileDialog.FileName), this.treeSites);
+                    FormHandler.savePath = openFileDialog.FileName;
                 }
                 catch (Exception ex)
                 {
@@ -168,6 +189,8 @@ namespace IPBuddy
                 {
                     XDocument document = FormHandler.TreeToXML(this.treeSites);
                     document.Save(saveFileDialog.FileName);
+                    FormHandler.savePath = saveFileDialog.FileName;
+                    this.Text = this.title + " - " + saveFileDialog.FileName;
                 }
                 catch (Exception ex)
                 {
@@ -200,6 +223,11 @@ namespace IPBuddy
                 Logger.WriteException(ex);
                 Logger.PromptLogReview("There was an error opening the help file.");
             }
+        }
+
+        private void changelogToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Process.Start("IExplore.exe", "http://www.joshmgilman.com/IPBuddy/changelog.htm");
         }
 
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
@@ -605,6 +633,12 @@ namespace IPBuddy
                 this.Show();
                 this.WindowState = FormWindowState.Normal;
             }
+        }
+
+        private void importNAEFromIPToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmImportSingle.SiteNode = this.treeSites.SelectedNode;
+            NAEHandler.importFrm.Show();
         }
     }
 }

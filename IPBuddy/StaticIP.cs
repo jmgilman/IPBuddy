@@ -41,6 +41,19 @@ namespace IPBuddy
             return ip;
         }
 
+        public static StaticIP GenerateStatic(String naeIP)
+        {
+            string[] parts = naeIP.Split(new char[] { '.' });
+            string lastOctet = parts[parts.Length - 1];
+            string baseIP = String.Join(".", parts, 0, parts.Length - 1);
+
+            string ip = baseIP + "." + (Convert.ToInt32(lastOctet) + 1).ToString();
+            string subnet = "255.255.255.0";
+            string gateway = baseIP + ".1";
+
+            return new StaticIP() { Address = ip, SubnetMask = subnet, DefaultGateway = gateway };
+        }
+
         public static bool IsIPv4(string ip)
         {
             System.Net.IPAddress address;

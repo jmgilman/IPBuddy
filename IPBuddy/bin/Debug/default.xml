@@ -3,10 +3,10 @@
   <Site Name="Juniper">
     <NAEs>
       <NAE Name="NAE1">
-        <IPAddress></IPAddress>
-        <MAC></MAC>
-        <OSVersion></OSVersion>
-        <MSEAVersion></MSEAVersion>
+        <IPAddress>1</IPAddress>
+        <MAC>2</MAC>
+        <OSVersion>3</OSVersion>
+        <MSEAVersion>4</MSEAVersion>
         <NeuronID></NeuronID>
         <StaticIP>
           <Address></Address>
@@ -22,8 +22,8 @@
         <NeuronID></NeuronID>
         <StaticIP>
           <Address>123.456.789.1</Address>
-          <SubnetMask></SubnetMask>
-          <DefaultGateway></DefaultGateway>
+          <SubnetMask>255.255.255.0</SubnetMask>
+          <DefaultGateway>1</DefaultGateway>
         </StaticIP>
       </NAE>
     </NAEs>

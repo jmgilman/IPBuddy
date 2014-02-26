@@ -62,10 +62,12 @@
             this.nAETrackerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpTopicsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.changelogToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.contextSite = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.newNAEToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.importNAEToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.importNAEFromIPToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exportToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.copyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pasteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -367,6 +369,7 @@
             // 
             this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.helpTopicsToolStripMenuItem,
+            this.changelogToolStripMenuItem,
             this.aboutToolStripMenuItem});
             this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
             this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
@@ -380,6 +383,13 @@
             this.helpTopicsToolStripMenuItem.Text = "Help Topics";
             this.helpTopicsToolStripMenuItem.Click += new System.EventHandler(this.helpTopicsToolStripMenuItem_Click);
             // 
+            // changelogToolStripMenuItem
+            // 
+            this.changelogToolStripMenuItem.Name = "changelogToolStripMenuItem";
+            this.changelogToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
+            this.changelogToolStripMenuItem.Text = "Changelog";
+            this.changelogToolStripMenuItem.Click += new System.EventHandler(this.changelogToolStripMenuItem_Click);
+            // 
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
@@ -392,52 +402,60 @@
             this.contextSite.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.newNAEToolStripMenuItem,
             this.importNAEToolStripMenuItem1,
+            this.importNAEFromIPToolStripMenuItem,
             this.exportToolStripMenuItem1,
             this.copyToolStripMenuItem,
             this.pasteToolStripMenuItem,
             this.deleteToolStripMenuItem});
             this.contextSite.Name = "contextSite";
-            this.contextSite.Size = new System.Drawing.Size(137, 136);
+            this.contextSite.Size = new System.Drawing.Size(181, 158);
             // 
             // newNAEToolStripMenuItem
             // 
             this.newNAEToolStripMenuItem.Name = "newNAEToolStripMenuItem";
-            this.newNAEToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
+            this.newNAEToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.newNAEToolStripMenuItem.Text = "New NAE";
             this.newNAEToolStripMenuItem.Click += new System.EventHandler(this.newNAEToolStripMenuItem_Click);
             // 
             // importNAEToolStripMenuItem1
             // 
             this.importNAEToolStripMenuItem1.Name = "importNAEToolStripMenuItem1";
-            this.importNAEToolStripMenuItem1.Size = new System.Drawing.Size(136, 22);
+            this.importNAEToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
             this.importNAEToolStripMenuItem1.Text = "Import NAE";
             this.importNAEToolStripMenuItem1.Click += new System.EventHandler(this.importNAEToolStripMenuItem1_Click);
+            // 
+            // importNAEFromIPToolStripMenuItem
+            // 
+            this.importNAEFromIPToolStripMenuItem.Name = "importNAEFromIPToolStripMenuItem";
+            this.importNAEFromIPToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.importNAEFromIPToolStripMenuItem.Text = "Import NAE From IP";
+            this.importNAEFromIPToolStripMenuItem.Click += new System.EventHandler(this.importNAEFromIPToolStripMenuItem_Click);
             // 
             // exportToolStripMenuItem1
             // 
             this.exportToolStripMenuItem1.Name = "exportToolStripMenuItem1";
-            this.exportToolStripMenuItem1.Size = new System.Drawing.Size(136, 22);
+            this.exportToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
             this.exportToolStripMenuItem1.Text = "Export";
             this.exportToolStripMenuItem1.Click += new System.EventHandler(this.exportToolStripMenuItem1_Click);
             // 
             // copyToolStripMenuItem
             // 
             this.copyToolStripMenuItem.Name = "copyToolStripMenuItem";
-            this.copyToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
+            this.copyToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.copyToolStripMenuItem.Text = "Copy";
             this.copyToolStripMenuItem.Click += new System.EventHandler(this.copyToolStripMenuItem_Click);
             // 
             // pasteToolStripMenuItem
             // 
             this.pasteToolStripMenuItem.Name = "pasteToolStripMenuItem";
-            this.pasteToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
+            this.pasteToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.pasteToolStripMenuItem.Text = "Paste";
             this.pasteToolStripMenuItem.Click += new System.EventHandler(this.pasteToolStripMenuItem_Click);
             // 
             // deleteToolStripMenuItem
             // 
             this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
-            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
+            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.deleteToolStripMenuItem.Text = "Delete";
             this.deleteToolStripMenuItem.Click += new System.EventHandler(this.deleteToolStripMenuItem_Click);
             // 
@@ -522,7 +540,8 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuMain;
             this.Name = "frmMain";
-            this.Text = "IPBuddy - V2.0.3";
+            this.Text = "IPBuddy - V2.1.0";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmMain_FormClosing);
             this.Resize += new System.EventHandler(this.frmMain_Resize);
             this.contextTree.ResumeLayout(false);
             this.groupAdapters.ResumeLayout(false);
@@ -593,6 +612,8 @@
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem1;
         public System.Windows.Forms.NotifyIcon notifyIcon;
         private System.Windows.Forms.ToolTip toolTipNotify;
+        private System.Windows.Forms.ToolStripMenuItem importNAEFromIPToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem changelogToolStripMenuItem;
 
     }
 }

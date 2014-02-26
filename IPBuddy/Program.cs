@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Deployment.Application;
+using System.Diagnostics;
 
 namespace IPBuddy
 {
@@ -15,6 +17,25 @@ namespace IPBuddy
         static void Main()
         {
             Logger.Initialize();
+
+            if (ApplicationDeployment.IsNetworkDeployed)
+            {
+                if (ApplicationDeployment.CurrentDeployment.IsFirstRun)
+                {
+                    DialogResult dialogResult = MessageBox.Show("Would you like to view the changelog for the new version of IPBuddy?", "Update", MessageBoxButtons.YesNo);
+                    if (dialogResult == DialogResult.Yes)
+                    {
+                        Process.Start("IExplore.exe", "http://www.joshmgilman.com/IPBuddy/changelog.htm");
+                    }
+                }
+            }
+
+            if (!AppDomain.CurrentDomain.FriendlyName.EndsWith("vshost.exe"))
+            {
+                Application.ThreadException += new System.Threading.ThreadExceptionEventHandler(Logger.CatchThread);
+                Application.SetUnhandledExceptionMode(UnhandledExceptionMode.CatchException);
+                AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(Logger.CatchUnhandled);
+            }
 
             try
             {

@@ -1,6 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Log timestamp="24/02/2014 09:35:25">
-  <Message value="Application initialized." timestamp="24/02/2014 09:35:25" />
-  <Message value="Form initializing." timestamp="24/02/2014 09:35:25" />
-  <Message value="Form initialized." timestamp="24/02/2014 09:35:25" />
+<Log timestamp="25/02/2014 09:47:30">
+  <Message value="Application initialized." timestamp="25/02/2014 09:47:30" />
+  <Message value="Form initializing." timestamp="25/02/2014 09:47:30" />
+  <Message value="Form initialized." timestamp="25/02/2014 09:47:31" />
+  <Message value="Received packet at 2014-02-25 09:47:41.538 with length 126" timestamp="25/02/2014 09:47:42" />
 </Log>

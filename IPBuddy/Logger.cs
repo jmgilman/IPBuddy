@@ -83,6 +83,20 @@ namespace IPBuddy
             }
         }
 
+        public static void CatchThread(object sender, System.Threading.ThreadExceptionEventArgs e)
+        {
+            Logger.WriteMessage("A UI thread exception was caught.");
+            Logger.WriteException(e.Exception);
+            Logger.PromptLogReview("An exception was caught in the main thread.");
+        }
+
+        public static void CatchUnhandled(Object sender, UnhandledExceptionEventArgs e)
+        {
+            Logger.WriteMessage("An unhandled thread exception was caught.");
+            Logger.WriteException((Exception)e.ExceptionObject);
+            Logger.PromptLogReview("An unhandled exception was caught.");
+        }
+
         private static String timestamp()
         {
             return DateTime.Now.ToString("dd/MM/yyyy hh:mm:ss");

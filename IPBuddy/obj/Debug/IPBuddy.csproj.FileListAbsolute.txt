@@ -89,3 +89,4 @@ C:\Users\cgilmajo\Documents\GitHub\IPBuddy\IPBuddy\bin\Debug\IPBuddy.exe.manifes
 C:\Users\cgilmajo\Documents\GitHub\IPBuddy\IPBuddy\bin\Debug\IPBuddy.application
 C:\Users\cgilmajo\Documents\GitHub\IPBuddy\IPBuddy\obj\Debug\IPBuddy.exe.manifest
 C:\Users\cgilmajo\Documents\GitHub\IPBuddy\IPBuddy\obj\Debug\IPBuddy.application
+C:\Users\cgilmajo\Documents\GitHub\IPBuddy\IPBuddy\obj\Debug\IPBuddy.frmImportSingle.resources
